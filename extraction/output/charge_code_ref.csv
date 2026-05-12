@@ -1,0 +1,172 @@
+charge_code_id,charge_code,classification,second_attribute,is_active,tier
+19,Additional Shredding Service,adverse,consistent,TRUE,2
+20,Addtl Hand Pick Up Commercial,adverse,consistent,TRUE,2
+21,Addtl Recycling Service Pick Up,adverse,consistent,TRUE,2
+22,Adjustment Commercial,one time,,TRUE,2
+23,Adjustment Industrial,one time,,TRUE,2
+24,Bad Debt Write Down,adverse,detrimental,TRUE,2
+25,Baler Rental,recurring,variable,TRUE,2
+26,Baler Wire,one time,consistent,TRUE,2
+27,Biohazardous Service,recurring,variable,TRUE,2
+28,Biohazardous Service by Lb,recurring,variable,TRUE,2
+29,Bulk Item Pick Up By Yard,one time,consistent,TRUE,2
+30,Bulk Item Pick Up Commercial,one time,consistent,TRUE,2
+31,Bulk Item Pick Up Industrial,one time,consistent,TRUE,2
+32,Cardboard Rebate,rebate,consistent,TRUE,2
+33,Casters,recurring,variable,TRUE,2
+34,Chemo Container Service,recurring,variable,TRUE,2
+35,Clean Up Industrial,adverse,consistent,TRUE,2
+36,Commercial,recurring,variable,TRUE,2
+37,Compactor Installation,one time,consistent,TRUE,2
+38,Compactor Monitoring,recurring,variable,TRUE,2
+39,Compactor Removal,one time,consistent,TRUE,2
+40,Compactor Rental,recurring,variable,TRUE,2
+41,Compactor/Baler Repair/Service,one time,consistent,TRUE,2
+42,Container Exchange,one time,consistent,TRUE,2
+43,Container Repair Commercial,one time,consistent,TRUE,2
+44,Container Repair Industrial,one time,consistent,TRUE,2
+45,Contaminated Disposal Charge,adverse,consistent,TRUE,2
+46,Contaminated Load,adverse,consistent,TRUE,1
+47,Contaminated Load by Yard,adverse,consistent,TRUE,2
+48,Contaminated Load Fee,adverse,consistent,TRUE,2
+49,Credit Card Processing Fee,study,consistent,TRUE,2
+50,Daily Rental Commercial,one time,consistent,TRUE,2
+51,Daily Rental Industrial,one time,consistent,TRUE,2
+52,Data Platform Invoice Processing,recurring,variable,TRUE,2
+53,Data Platform Software,recurring,variable,TRUE,2
+54,Delivery Commercial,one time,consistent,TRUE,1
+55,Delivery Industrial,one time,consistent,TRUE,1
+56,Delivery Mobile Units,one time,consistent,TRUE,2
+57,Delivery Portable Toilets,one time,consistent,TRUE,2
+58,Demurrage Industrial,one time,consistent,TRUE,2
+59,Deodorizer Industrial,one time,consistent,TRUE,2
+60,Dig Out Industrial,one time,consistent,TRUE,2
+61,Disposal,demand - weight,consistent,TRUE,2
+62,Disposal Charge,demand - weight,consistent,TRUE,1
+63,Disposal Charge Special Waste,demand - weight,consistent,TRUE,2
+64,Diversion Discount,study,,TRUE,2
+65,Donation Credit,recurring,,TRUE,2
+66,Empty & Return,demand - haul,variable,TRUE,1
+67,Environmental Surcharge,fuel,consistent,TRUE,1
+68,Environmental Surcharge Commercial,fuel,consistent,TRUE,2
+69,Environmental Surcharge Disposal,fuel,consistent,TRUE,2
+70,Environmental Surcharge Industrial,fuel,consistent,TRUE,2
+71,Environmental Surcharge Portable Toilets,fuel,consistent,TRUE,2
+72,Equipment Purchase,one time,consistent,TRUE,2
+73,Equipment Rental,recurring,variable,TRUE,2
+74,Equipment Sales,one time,consistent,TRUE,2
+75,EWaste Service,one time,consistent,TRUE,2
+76,Executive Console Shredded Paper,recurring/one time,variable,TRUE,2
+77,Extra Pick Up,adverse,consistent,TRUE,1
+78,Final Pick Up,demand - haul,variable,TRUE,1
+79,Franchise Fee Commercial,recurring,variable,TRUE,2
+80,Franchise Fee Disposal,demand - weight,consistent,TRUE,2
+81,Franchise Fee Industrial,demand - haul,variable,TRUE,2
+82,Front Load Sensor,recurring,variable,TRUE,2
+83,Front Load Sensor Installation,one time,consistent,TRUE,2
+84,FUEL SURCHARGE,fuel,consistent,TRUE,1
+85,Fuel Surcharge Commercial,fuel,consistent,TRUE,2
+86,Fuel Surcharge Disposal,fuel,consistent,TRUE,2
+87,Fuel Surcharge Industrial,fuel,consistent,TRUE,2
+88,Fuel Surcharge Mobile Units,fuel,consistent,TRUE,2
+89,Fuel Surcharge Portable Toilets,fuel,consistent,TRUE,2
+90,Grease Rendering Service,recurring,variable,TRUE,2
+91,Grease Trap,recurring,variable,TRUE,2
+92,Grease Trap Service,recurring,variable,TRUE,2
+93,Hand Pick Up Commercial,recurring,variable,TRUE,1
+94,Hand Pick Up industrial,recurring,variable,TRUE,1
+95,Handwash Station,one time,consistent,TRUE,2
+96,Hopper,recurring,variable,TRUE,2
+97,Inactivty Fee,adverse,consistent,TRUE,2
+98,Industrial,demand,,TRUE,2
+99,Landfill - C&D,study,,TRUE,2
+100,Landfill - Tires,study,,TRUE,2
+101,Landfill - Trash,study,,TRUE,2
+102,Landfill Direct - Disposal Charge,study,,TRUE,2
+103,Lidded Container,recurring,,TRUE,2
+104,Liner,one time,consistent,TRUE,2
+105,Liquidated Damages Savings Offset,adverse,,TRUE,2
+106,Liquidated Damages Savings Offset Com,adverse,,TRUE,2
+107,Local Surcharge Commercial,local surcharges/fees,consistent,TRUE,1
+108,Local Surcharge Industrial,local surcharges/fees,consistent,TRUE,2
+109,Local Surcharge/Fees Commercial,local surcharges/fees,consistent,TRUE,2
+110,Local Surcharge/Fees Industrial,local surcharges/fees,consistent,TRUE,2
+111,Local Surcharges/ Fees Industrial,local surcharges/fees,consistent,TRUE,2
+112,Local Surcharges/Fees Commercial,local surcharges/fees,consistent,TRUE,2
+113,Local Surcharges/Fees Disposal,local surcharges/fees,consistent,TRUE,2
+114,Local Surcharges/Fees Industrial,local surcharges/fees,consistent,TRUE,2
+115,Local Surcharges/Fees Mobile Units,local surcharges/fees,consistent,TRUE,2
+116,Local Surcharges/Fees Portable Toilets,local surcharges/fees,consistent,TRUE,2
+117,Lock Bar,recurring,variable,TRUE,2
+118,Lock Bar Installation,one time,consistent,TRUE,2
+119,Metal Rebate,rebate,consistent,TRUE,2
+120,Miscellaneous,study,,TRUE,2
+121,Mobile Compaction,demand - haul contra,variable,TRUE,2
+122,Monthly Rental Commercial,recurring,variable,TRUE,1
+123,Monthly Rental Industrial,recurring,variable,TRUE,1
+124,Monthly Rental Mobile Units,recurring,variable,TRUE,2
+125,Monthly Rental Portable Toilets,recurring,variable,TRUE,2
+126,Monthly Service Commercial,recurring,variable,TRUE,2
+127,Monthly Service Industrial,recurring,variable,TRUE,2
+128,Monthly Service Portable Toilets,recurring,variable,TRUE,2
+129,Non Hazard Container Service,study,,TRUE,2
+130,OCC Rebate,rebate,consistent,TRUE,2
+131,On Call Service Commercial,one time,consistent,TRUE,2
+132,Onboarding Vendor cost change - Commercial,study,,TRUE,2
+133,Onboarding Vendor cost change - Industrial,study,,TRUE,2
+134,Over Tonnage Limit Fee,adverse,consistent,TRUE,2
+135,Overage,adverse,consistent,TRUE,1
+136,Overage by Yard,adverse,consistent,TRUE,2
+137,Portable Toilets,recurring,variable,TRUE,2
+138,Proration Commercial,one time,consistent,TRUE,2
+139,Quarterly Solid Waste Surcharge,local surcharges/fees,consistent,TRUE,2
+140,Receiver Container Rental,recurring,variable,TRUE,2
+141,Recycling,recycling,consistent,TRUE,1
+142,Recycling Offset,rebate,consistent,TRUE,1
+143,Recycling Processing Fee,recycling,consistent,TRUE,2
+144,Recycling Rebate,rebate,consistent,TRUE,2
+145,Recycling Service Material,recycling,consistent,TRUE,2
+146,Recycling Service Pick Up,recycling,consistent,TRUE,2
+147,Recycling Service Weight,recycling,consistent,TRUE,2
+148,Recycling-Offset,rebate,consistent,TRUE,2
+149,Relocate Commercial,one time,consistent,TRUE,2
+150,Relocate Industrial,one time,consistent,TRUE,2
+151,Removal Commercial,one time,consistent,TRUE,2
+152,Sales Tax,local surcharges/fees,consistent,TRUE,2
+153,Scrap Metal Service,recycling,consistent,TRUE,2
+154,Seasonal Service Commercial,one time,consistent,TRUE,2
+155,Service Attempt,adverse,consistent,TRUE,2
+156,Service Mobile Units,study,,TRUE,2
+157,Sharps Disposal Service,recurring,,TRUE,2
+158,Shredding Bag Service,recurring,,TRUE,2
+159,Shredding Service,recurring,,TRUE,2
+160,Supply Purchase,study,,TRUE,2
+161,Tax Commercial,local surcharges/fees,consistent,TRUE,1
+162,Tax Industrial,local surcharges/fees,consistent,TRUE,2
+163,Tax Mobile Units,local surcharges/fees,consistent,TRUE,2
+164,Tax Portable Toilets,local surcharges/fees,consistent,TRUE,2
+165,Tipping Fee,demand,,TRUE,2
+166,Trailer Rental,recurring,variable,TRUE,2
+167,Transportation,recurring,variable,TRUE,2
+168,Transportation Hourly,recurring,variable,TRUE,2
+169,Trip Charge,adverse,consistent,TRUE,2
+170,Vacuum Service,recurring,variable,TRUE,2
+171,Vacuum Service Hourly,recurring,variable,TRUE,2
+172,Vendor Cost Increase - Commercial,cost increase,detrimental,TRUE,2
+173,Vendor Cost Increase - Industrial,cost increase,detrimental,TRUE,2
+174,Vendor Late Fees,late fee,detrimental,TRUE,2
+175,Wasteology Franchise Management Fee,management fee,consistent,TRUE,2
+176,Wasteology Management Fee,management fee,consistent,TRUE,2
+177,Weight Adjustment,study,,TRUE,2
+178,WG Admin Fee,late fee,detrimental,TRUE,2
+197,Data Platform Set Up,one time,consistent,TRUE,2
+198,Recurring/One Time,recurring,variable,TRUE,2
+199,Handwash Station W Portalets,recurring,variable,TRUE,2
+200,Mobile Units,recurring,variable,TRUE,2
+201,Landfill Etc,demand - weight,consistent,TRUE,2
+202,Waste Audit,one time,consistent,TRUE,2
+203,Emergency Service Fee,one time,consistent,TRUE,2
+204,Compactor Installation Dry Run,adverse,consistent,TRUE,2
+205,Removal Mobile Units,one time,consistent,TRUE,2
+206,Installing Mobile Units,one time,consistent,TRUE,2
+207,Compactor Monitoring Removal,one time,consistent,TRUE,2

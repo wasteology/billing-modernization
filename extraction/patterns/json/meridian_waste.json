@@ -1,0 +1,391 @@
+{
+  "vendor_name": "Meridian Waste",
+  "format_label": "meridian_waste",
+  "routing_regex": "MERIDIAN\\s+WASTE",
+  "routing_flags": [
+    "IGNORECASE",
+    "DOTALL"
+  ],
+  "routing_priority": 50,
+  "is_active": true,
+  "sample_md5": null,
+  "extraction_stages": [
+    {
+      "name": "invoice_number_date",
+      "method": "search",
+      "pattern": "(?P<invoice_date>\\d{2}/\\d{2}/\\d{4})\\s+(?P<invoice_number>\\d{7})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "invoice_number": "invoice_number",
+        "invoice_date": "invoice_date"
+      }
+    },
+    {
+      "name": "account_number",
+      "method": "search",
+      "pattern": "Account\\s+No\\.\\s*[=\\s]*(?P<account_number>\\d{2}-\\d{7})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "account_number": "account_number"
+      }
+    },
+    {
+      "name": "bill_total",
+      "method": "search",
+      "pattern": "(?:Total\\s+Invoice|Total\\s+New\\s+Charges):?\\s+\\$?(?P<bill_total>[\\d,]+\\.\\d{2})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "bill_total": "bill_total"
+      }
+    },
+    {
+      "name": "body",
+      "method": "body_extract",
+      "pattern": "For\\s+proper\\s+credit.*?\\n(?P<body>.*)Total\\s+Invoice",
+      "flags": [
+        "DOTALL",
+        "IGNORECASE"
+      ],
+      "output_field": "_body",
+      "group": "body"
+    },
+    {
+      "name": "service_address",
+      "method": "search",
+      "pattern": "VICTOR\\s+NY\\s+\\d{5}\\s+(?P<service_address>[^\\n]+)",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "service_address": "service_address"
+      }
+    }
+  ],
+  "execution_plan": [
+    "bill_total_parse",
+    "date_format"
+  ],
+  "transform_rules": {
+    "bill_total_parse": {
+      "type": "currency_parse",
+      "field": "bill_total",
+      "strip_dollar": true,
+      "strip_comma": true
+    },
+    "date_format": {
+      "type": "date_parse",
+      "field": "invoice_date",
+      "formats": [
+        "%m/%d/%Y"
+      ]
+    },
+    "charge_code_classify": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "charge_code",
+      "rules": [
+        {
+          "keywords": "disposal",
+          "label": "Disposal Charge"
+        },
+        {
+          "keywords": "haul",
+          "label": "Empty & Return"
+        },
+        {
+          "keywords": "switch",
+          "label": "Empty & Return"
+        },
+        {
+          "keywords": "dry run",
+          "label": "Empty & Return"
+        },
+        {
+          "keywords": "service",
+          "label": "Monthly Service Commercial"
+        },
+        {
+          "keywords": "perm fee",
+          "label": "Monthly Rental Industrial"
+        },
+        {
+          "keywords": "container",
+          "label": "Monthly Rental Commercial"
+        },
+        {
+          "keywords": "fuel",
+          "label": "FUEL SURCHARGE"
+        },
+        {
+          "keywords": "franchise",
+          "label": "Local Surcharge Commercial"
+        },
+        {
+          "keywords": "late fee",
+          "label": "Local Surcharge Commercial"
+        },
+        {
+          "keywords": "processing",
+          "label": "Environmental Surcharge"
+        }
+      ],
+      "default": "Monthly Service Commercial"
+    },
+    "equipment_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "equipment_type",
+      "rules": [
+        {
+          "keywords": "comp",
+          "label": "COMPACTOR"
+        },
+        {
+          "keywords": "rol",
+          "label": "ROLL_OFF"
+        },
+        {
+          "keywords": "f/l",
+          "label": "FRONT_LOAD"
+        }
+      ],
+      "default": "FRONT_LOAD"
+    },
+    "material_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "material",
+      "rules": [
+        {
+          "keywords": "c & d",
+          "label": "C&D"
+        },
+        {
+          "keywords": "c&d",
+          "label": "C&D"
+        },
+        {
+          "keywords": "wood",
+          "label": "WOOD"
+        },
+        {
+          "keywords": "yard waste",
+          "label": "YARD_WASTE"
+        },
+        {
+          "keywords": "recycl",
+          "label": "RECYCLING"
+        },
+        {
+          "keywords": "cardboard",
+          "label": "OCC"
+        }
+      ],
+      "default": "MSW"
+    },
+    "schedule_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "schedule",
+      "rules": [
+        {
+          "keywords": "p/u: 6",
+          "label": "Weekly x6"
+        },
+        {
+          "keywords": "p/u: 5",
+          "label": "Weekly x5"
+        },
+        {
+          "keywords": "p/u: 4",
+          "label": "Weekly x4"
+        },
+        {
+          "keywords": "p/u: 3",
+          "label": "Weekly x3"
+        },
+        {
+          "keywords": "p/u: 2",
+          "label": "Weekly x2"
+        },
+        {
+          "keywords": "p/u:",
+          "label": "Weekly x1"
+        },
+        {
+          "keywords": "haul",
+          "label": "ON_CALL"
+        },
+        {
+          "keywords": "disposal",
+          "label": "ON_CALL"
+        },
+        {
+          "keywords": "dry run",
+          "label": "ON_CALL"
+        },
+        {
+          "keywords": "switch",
+          "label": "ON_CALL"
+        }
+      ],
+      "default": null
+    },
+    "equipment_size_extract": {
+      "type": "regex_parse_multi",
+      "source_field": "description",
+      "pattern": "[O0]?(?P<size_num>\\d+)\\s*(?P<size_unit>YD)",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "group_outputs": [
+        {
+          "group": "size_num",
+          "output_field": "_size_num"
+        },
+        {
+          "group": "size_unit",
+          "output_field": "_size_unit",
+          "map": {
+            "YD": "YD",
+            "yd": "YD"
+          }
+        }
+      ]
+    },
+    "equipment_size_format": {
+      "type": "concat_fields",
+      "fields": [
+        "_size_num",
+        "_size_unit"
+      ],
+      "separator": " ",
+      "output_field": "equipment_size"
+    },
+    "surcharge_inherit": {
+      "type": "parent_container",
+      "charges_field": "_charges",
+      "inherit_fields": [
+        "equipment_type",
+        "equipment_size",
+        "material",
+        "schedule"
+      ],
+      "direction": "both",
+      "skip_zero": false
+    }
+  },
+  "charge_pipeline": {
+    "mode": "flat",
+    "source_field": "_body",
+    "skip_patterns": [
+      "^\\s*$",
+      "\\*\\*\\s*SUB\\s+ACCT",
+      "Sub\\s+Total",
+      "^\\s*Fees\\s",
+      "PO\\s+BOX",
+      "Due\\s+Date",
+      "Account\\s+No",
+      "For\\s+proper\\s+credit",
+      "MERIDIAN",
+      "We\\s+appreciate",
+      "Your\\s+next",
+      "Online\\s+bill",
+      "Thank\\s+you",
+      "Total\\s+Invoice",
+      "PMT:",
+      "PAYMENT",
+      "Subtotal",
+      "PO#:",
+      "WORK\\s+ORDER",
+      "Page\\s+\\d",
+      "Service\\s+Dates",
+      "Date:\\s+Description",
+      "^\\s*Total\\s",
+      "^\\s*Fees\\s+\\d"
+    ],
+    "charge_detect": {
+      "date_pattern": "(\\d{2}/\\d{2}/\\d{2})",
+      "date_format": "{0}",
+      "require_date": true
+    },
+    "charge_extract": {
+      "amount_pattern": "\\(\\$?([\\d,]+\\.\\d{2})\\)|\\$?(-?[\\d,]+\\.\\d{2})",
+      "amount_mode": "last_is_total",
+      "weight_pattern": "TKT#\\s*\\d+\\s+(\\d+\\.\\d+)"
+    },
+    "per_charge_transforms": [
+      "charge_code_classify",
+      "equipment_detect",
+      "material_detect",
+      "schedule_detect",
+      "equipment_size_extract",
+      "equipment_size_format"
+    ],
+    "post_processing": [
+      "surcharge_inherit"
+    ]
+  },
+  "output_spec": {
+    "header_fields": [
+      "invoice_number",
+      "invoice_date",
+      "account_number",
+      "bill_total",
+      "service_address"
+    ],
+    "charge_fields": [
+      "service_date",
+      "description",
+      "charge_total",
+      "equipment_type",
+      "equipment_size",
+      "material",
+      "schedule",
+      "weight",
+      "weight_unit",
+      "charge_code",
+      "charge_type"
+    ],
+    "csv_columns": [
+      "pdf_filename",
+      "pdf_link",
+      "invoice_number",
+      "invoice_date",
+      "account_number",
+      "bill_total",
+      "charge_sum",
+      "num_charges",
+      "valid",
+      "diff",
+      "service_date",
+      "description",
+      "charge_type",
+      "charge_total",
+      "equipment_type",
+      "equipment_size",
+      "material",
+      "schedule",
+      "charge_code",
+      "weight",
+      "weight_unit",
+      "flag",
+      "service_address"
+    ],
+    "required_header": [
+      "invoice_number",
+      "bill_total"
+    ],
+    "required_charge": [
+      "charge_total"
+    ],
+    "charge_sum_check": true,
+    "total_field": "bill_total"
+  }
+}

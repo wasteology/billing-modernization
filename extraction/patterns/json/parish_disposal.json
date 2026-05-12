@@ -1,0 +1,298 @@
+{
+  "format_label": "parish_disposal",
+  "vendor_name": "Parish Disposal",
+  "routing_regex": "Parish\\s+Disposal",
+  "routing_flags": [
+    "IGNORECASE",
+    "DOTALL"
+  ],
+  "extraction_stages": [
+    {
+      "name": "header_line",
+      "method": "search",
+      "pattern": "(?P<invoice_number>\\d{5,6})\\s+(?P<invoice_date>\\d{2}/\\d{2}/\\d{4})\\s+\\$?(?P<bill_total>[\\d,]+\\.\\d{2})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "invoice_number": "invoice_number",
+        "invoice_date": "invoice_date",
+        "bill_total": "bill_total"
+      }
+    },
+    {
+      "name": "account_number",
+      "method": "search",
+      "pattern": "ACCOUNT\\s+#\\s*\\n.*?(?P<account_number>NG\\S+)",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "account_number": "account_number"
+      }
+    },
+    {
+      "name": "service_address_street",
+      "method": "search",
+      "pattern": "(?P<_addr_street>4400\\s+Sen\\s+J\\s+Bennett\\s+Johnston\\s+Ave)",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "_addr_street": "_addr_street"
+      }
+    },
+    {
+      "name": "service_address_city",
+      "method": "search",
+      "pattern": "(?P<_addr_city_state>Lake\\s+Charles,\\s*LA\\s+\\d{5})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "_addr_city_state": "_addr_city_state"
+      }
+    },
+    {
+      "name": "body",
+      "method": "body_extract",
+      "pattern": "Charges\\s*\\n(.*?)(?:Locally\\s+owned|BALANCE\\s+DUE|$)",
+      "flags": [
+        "IGNORECASE",
+        "DOTALL"
+      ],
+      "output_field": "body",
+      "group": 1
+    }
+  ],
+  "execution_plan": [
+    "bill_total_parse",
+    "date_format",
+    "addr_concat"
+  ],
+  "transform_rules": {
+    "bill_total_parse": {
+      "type": "currency_parse",
+      "field": "bill_total",
+      "strip_dollar": true,
+      "strip_comma": true
+    },
+    "date_format": {
+      "type": "date_parse",
+      "field": "invoice_date",
+      "formats": [
+        "%m/%d/%Y"
+      ]
+    },
+    "addr_concat": {
+      "type": "concat_fields",
+      "fields": ["_addr_street", "_addr_city_state"],
+      "separator": ", ",
+      "output_field": "service_address"
+    },
+    "equipment_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "equipment_type",
+      "rules": [
+        {
+          "keywords": "delivered",
+          "label": "OPEN_TOP"
+        },
+        {
+          "keywords": "dumpster",
+          "label": "FRONT_LOAD"
+        },
+        {
+          "keywords": "roll off",
+          "label": "OPEN_TOP"
+        },
+        {
+          "keywords": "cart",
+          "label": "CART"
+        }
+      ],
+      "default": "FRONT_LOAD"
+    },
+    "equipment_size_extract": {
+      "type": "regex_capture",
+      "source_field": "description",
+      "output_field": "equipment_size",
+      "pattern": "(\\d+)\\s*yd",
+      "group": 1
+    },
+    "material_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "material",
+      "rules": [
+        {
+          "keywords": "recycl",
+          "label": "RECYCLING"
+        },
+        {
+          "keywords": "cardboard",
+          "label": "OCC"
+        }
+      ],
+      "default": "MSW"
+    },
+    "schedule_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "schedule",
+      "rules": [
+        {
+          "keywords": "6x wk",
+          "label": "Weekly x6"
+        },
+        {
+          "keywords": "5x wk",
+          "label": "Weekly x5"
+        },
+        {
+          "keywords": "4x wk",
+          "label": "Weekly x4"
+        },
+        {
+          "keywords": "3x wk",
+          "label": "Weekly x3"
+        },
+        {
+          "keywords": "2x wk",
+          "label": "Weekly x2"
+        },
+        {
+          "keywords": "1x wk",
+          "label": "Weekly x1"
+        }
+      ]
+    },
+    "charge_code_classify": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "charge_code",
+      "rules": [
+        {
+          "keywords": "inactiv",
+          "label": "Inactivty Fee"
+        },
+        {
+          "keywords": "tonnage",
+          "label": "Disposal Charge"
+        },
+        {
+          "keywords": "delivered",
+          "label": "Delivery Industrial"
+        },
+        {
+          "keywords": "service",
+          "label": "Monthly Service Commercial"
+        },
+        {
+          "keywords": "dumpster",
+          "label": "Monthly Service Commercial"
+        }
+      ],
+      "default": "Monthly Service Commercial"
+    },
+    "charge_type_classify": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "charge_type",
+      "rules": [
+        {
+          "keywords": "inactiv",
+          "label": "FEE"
+        },
+        {
+          "keywords": "fee",
+          "label": "FEE"
+        }
+      ],
+      "default": "RECURRING"
+    }
+  },
+  "charge_pipeline": {
+    "source_field": "body",
+    "charge_detect": {
+      "date_pattern": null,
+      "require_date": false
+    },
+    "charge_extract": {
+      "amount_pattern": "\\(\\$?([\\d,]+\\.\\d{2})\\)|\\$?([\\d,]+\\.\\d{2})",
+      "amount_mode": "last_is_total",
+      "min_amounts": 2
+    },
+    "skip_patterns": [
+      "^\\s*$",
+      "^\\s*(?:January|February|March|April|May|June|July|August|September|October|November|December)\\s*$",
+      "^\\s*\\d{2}-\\d{2,3}\\s*$"
+    ],
+    "per_charge_transforms": [
+      "equipment_detect",
+      "equipment_size_extract",
+      "material_detect",
+      "schedule_detect",
+      "charge_code_classify",
+      "charge_type_classify"
+    ],
+    "post_processing": []
+  },
+  "output_spec": {
+    "header_fields": [
+      "invoice_number",
+      "invoice_date",
+      "account_number",
+      "bill_total",
+      "service_address"
+    ],
+    "charge_fields": [
+      "service_date",
+      "description",
+      "charge_total",
+      "equipment_type",
+      "equipment_size",
+      "material",
+      "schedule",
+      "weight",
+      "weight_unit",
+      "charge_code",
+      "charge_type"
+    ],
+    "csv_columns": [
+      "pdf_filename",
+      "pdf_link",
+      "invoice_number",
+      "invoice_date",
+      "account_number",
+      "bill_total",
+      "charge_sum",
+      "num_charges",
+      "valid",
+      "diff",
+      "service_date",
+      "description",
+      "charge_type",
+      "charge_total",
+      "equipment_type",
+      "equipment_size",
+      "material",
+      "schedule",
+      "charge_code",
+      "weight",
+      "weight_unit",
+      "flag",
+      "service_address"
+    ],
+    "required_header": [
+      "invoice_number",
+      "bill_total"
+    ],
+    "required_charge": [
+      "charge_total"
+    ],
+    "charge_sum_check": true,
+    "total_field": "bill_total"
+  }
+}

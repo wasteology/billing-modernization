@@ -1,0 +1,42 @@
+{
+  "_comment": "Maps non-canonical charge codes to canonical codes in charge_code_ref.csv. Equipment-class-aware entries use a dict keyed by equipment_type. The 'default' key is used when equipment_type is absent or unrecognized.",
+  "Administrative Fee": "Local Surcharge Commercial",
+  "Container Rental": {
+    "CART": "Monthly Rental Commercial",
+    "FRONT_LOAD": "Monthly Rental Commercial",
+    "REAR_LOAD": "Monthly Rental Commercial",
+    "COMPACTOR": "Monthly Rental Industrial",
+    "OPEN_TOP": "Monthly Rental Industrial",
+    "default": "Monthly Rental Commercial"
+  },
+  "Disposal": "Disposal Charge",
+  "Dry Run": "Compactor Installation Dry Run",
+  "Extra Pickup": "Extra Pick Up",
+  "Finance Charge": "Vendor Late Fees",
+  "Franchise Fee": "Franchise Fee Commercial",
+  "Fuel/Environmental Recovery Fee": "Environmental Surcharge",
+  "Haul": "Empty & Return",
+  "Inactivity Charge": "Inactivty Fee",
+  "Late Fee": "Vendor Late Fees",
+  "Lock Service": "Lock Bar",
+  "Metal Rebate": "Metal Rebate",
+  "Minimum Lift Fee": "Local Surcharge Commercial",
+  "Miscellaneous": "Miscellaneous",
+  "Monthly Service Commercial": "Monthly Service Commercial",
+  "Monthly Service Industrial": "Monthly Service Industrial",
+  "Recyclable Material Offset": "Recycling Offset",
+  "Recycling Revenue": "Recycling Rebate",
+  "Relocate Industrial": "Relocate Industrial",
+  "Sales Tax": "Sales Tax",
+  "Scheduled Service": {
+    "CART": "Monthly Service Commercial",
+    "FRONT_LOAD": "Monthly Service Commercial",
+    "REAR_LOAD": "Monthly Service Commercial",
+    "COMPACTOR": "Monthly Service Industrial",
+    "OPEN_TOP": "Monthly Service Industrial",
+    "default": "Monthly Service Commercial"
+  },
+  "Tax": "Tax Commercial",
+  "Trip Charge": "Trip Charge",
+  "Vendor Late Fees": "Vendor Late Fees"
+}

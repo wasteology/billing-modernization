@@ -1,0 +1,331 @@
+{
+  "format_label": "lepage",
+  "vendor_name": "LePage & Sons",
+  "routing_regex": "LOCAL\\s+WASTE\\s+SOLUTIONS|LEPAGE\\s*&\\s*SONS",
+  "routing_flags": [
+    "IGNORECASE",
+    "DOTALL"
+  ],
+  "extraction_stages": [
+    {
+      "name": "invoice_number",
+      "method": "search",
+      "pattern": "Invoice\\s+Number\\s+(?P<invoice_number>\\d+)",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "invoice_number": "invoice_number"
+      }
+    },
+    {
+      "name": "invoice_date",
+      "method": "search",
+      "pattern": "Invoice\\s+Date\\s+[_\\s]*(?P<invoice_date>\\d{2}/\\d{2}/\\d{4})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "invoice_date": "invoice_date"
+      }
+    },
+    {
+      "name": "bill_total",
+      "method": "search",
+      "pattern": "Invoice\\s+Total\\s+(?P<bill_total>[\\d,]+\\.\\d{2})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "bill_total": "bill_total"
+      }
+    },
+    {
+      "name": "account_number",
+      "method": "search",
+      "pattern": "Customer\\s*Number\\s*\\D+(?P<account_number>[\\d][\\d\\s-]+\\d)",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "account_number": "account_number"
+      }
+    },
+    {
+      "name": "body",
+      "method": "body_extract",
+      "pattern": "Date\\s+Description[^\\n]*\\n(.*)Total\\s+Invoice",
+      "flags": [
+        "IGNORECASE",
+        "DOTALL"
+      ],
+      "output_field": "body",
+      "group": 1
+    },
+    {
+      "name": "service_address",
+      "method": "search",
+      "pattern": "(?:WASTE\\s+HARMONICS|WASTEOLOGY)\\s+(?P<service_address>\\d+\\s+[^\\n]+)",
+      "flags": ["IGNORECASE"],
+      "field_map": {"service_address": "service_address"}
+    },
+    {
+      "name": "service_address_interleaved",
+      "method": "search",
+      "pattern": "7665[^\\n]+?(?P<service_address>\\d{4,5}\\s+[A-Z][^\\n]+)",
+      "flags": ["IGNORECASE"],
+      "field_map": {"service_address": "service_address"},
+      "skip_if_set": ["service_address"]
+    }
+  ],
+  "execution_plan": [
+    "bill_total_parse",
+    "date_format"
+  ],
+  "transform_rules": {
+    "bill_total_parse": {
+      "type": "currency_parse",
+      "field": "bill_total",
+      "strip_dollar": true,
+      "strip_comma": true
+    },
+    "date_format": {
+      "type": "date_parse",
+      "field": "invoice_date",
+      "formats": [
+        "%m/%d/%Y"
+      ]
+    },
+    "date_service": {
+      "type": "date_parse",
+      "field": "service_date",
+      "formats": [
+        "%m/%d/%y",
+        "%m/%d/%Y"
+      ]
+    },
+    "equipment_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "equipment_type",
+      "rules": [
+        {
+          "keywords": "compactor",
+          "label": "COMPACTOR"
+        },
+        {
+          "keywords": "rolloff",
+          "label": "ROLL_OFF"
+        },
+        {
+          "keywords": "roll off",
+          "label": "ROLL_OFF"
+        }
+      ],
+      "default": "FRONT_LOAD"
+    },
+    "material_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "material",
+      "rules": [
+        {
+          "keywords": "recycle",
+          "label": "RECYCLING"
+        },
+        {
+          "keywords": "cardboard",
+          "label": "OCC"
+        },
+        {
+          "keywords": "organic",
+          "label": "ORGANICS"
+        }
+      ],
+      "default": "MSW"
+    },
+    "size_extract": {
+      "type": "regex_capture",
+      "source_field": "description",
+      "output_field": "equipment_size",
+      "pattern": "(?:[O0])?(\\d+)\\s*Y",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "transform": "{0} YD"
+    },
+    "charge_code_classify": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "charge_code",
+      "rules": [
+        {
+          "keywords": "late fee",
+          "label": "Late Fee"
+        },
+        {
+          "keywords": "fuel",
+          "label": "Fuel/Environmental Recovery Fee"
+        },
+        {
+          "keywords": "surcharge",
+          "label": "Fuel/Environmental Recovery Fee"
+        },
+        {
+          "keywords": "rent",
+          "label": "Container Rental"
+        }
+      ],
+      "default": "Scheduled Service"
+    },
+    "charge_type_classify": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "charge_type",
+      "rules": [
+        {
+          "keywords": "late fee",
+          "label": "SURCHARGE"
+        },
+        {
+          "keywords": "fuel",
+          "label": "SURCHARGE"
+        },
+        {
+          "keywords": "surcharge",
+          "label": "SURCHARGE"
+        },
+        {
+          "keywords": "rent",
+          "label": "RENTAL"
+        }
+      ],
+      "default": "RECURRING"
+    },
+    "schedule_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "schedule",
+      "rules": [
+        {
+          "keywords": "#p/u: 6",
+          "label": "Weekly x6"
+        },
+        {
+          "keywords": "#p/u: 5",
+          "label": "Weekly x5"
+        },
+        {
+          "keywords": "#p/u: 4",
+          "label": "Weekly x4"
+        },
+        {
+          "keywords": "#p/u: 3",
+          "label": "Weekly x3"
+        },
+        {
+          "keywords": "#p/u: 2",
+          "label": "Weekly x2"
+        },
+        {
+          "keywords": "#p/u: 1",
+          "label": "Weekly x1"
+        },
+        {
+          "keywords": "#p/u",
+          "label": "Weekly x1"
+        }
+      ],
+      "default": null
+    }
+  },
+  "charge_pipeline": {
+    "source_field": "body",
+    "charge_detect": {
+      "date_pattern": "(\\d{2}/\\d{2}/\\d{2,4})",
+      "date_format": "{0}",
+      "require_date": false
+    },
+    "charge_extract": {
+      "amount_pattern": "\\(\\$?([\\d,]+\\.\\d{2})\\)|([\\d,]+\\.\\d{2})",
+      "amount_mode": "last_is_total"
+    },
+    "skip_patterns": [
+      "^\\s*$",
+      "Auto-Pay",
+      "ACH\\s+Payment",
+      "Call\\s+our\\s+office",
+      "pay\\s+your\\s+bill",
+      "MyLeP",
+      "access\\s+code",
+      "Total\\s+Taxes",
+      "bill\\s+is\\s+ready"
+    ],
+    "per_charge_transforms": [
+      "date_service",
+      "equipment_detect",
+      "material_detect",
+      "size_extract",
+      "charge_code_classify",
+      "charge_type_classify",
+      "schedule_detect"
+    ],
+    "post_processing": []
+  },
+  "output_spec": {
+    "header_fields": [
+      "invoice_number",
+      "invoice_date",
+      "account_number",
+      "bill_total",
+      "service_address"
+    ],
+    "charge_fields": [
+      "service_date",
+      "description",
+      "charge_total",
+      "equipment_type",
+      "equipment_size",
+      "material",
+      "schedule",
+      "weight",
+      "weight_unit",
+      "charge_code",
+      "charge_type"
+    ],
+    "csv_columns": [
+      "pdf_filename",
+      "pdf_link",
+      "invoice_number",
+      "invoice_date",
+      "account_number",
+      "bill_total",
+      "charge_sum",
+      "num_charges",
+      "valid",
+      "diff",
+      "service_date",
+      "description",
+      "charge_type",
+      "charge_total",
+      "equipment_type",
+      "equipment_size",
+      "material",
+      "schedule",
+      "charge_code",
+      "weight",
+      "weight_unit",
+      "flag",
+      "service_address"
+    ],
+    "required_header": [
+      "invoice_number",
+      "bill_total"
+    ],
+    "required_charge": [
+      "charge_total"
+    ],
+    "charge_sum_check": true,
+    "total_field": "bill_total"
+  }
+}

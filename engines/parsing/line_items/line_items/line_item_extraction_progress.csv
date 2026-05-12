@@ -1,0 +1,733 @@
+vendor_name,invoice_count,status,tranche
+Waste Connections,15609,COMPLETE,1
+Anytime Waste,3226,COMPLETE,1
+Republic Services,2811,COMPLETE,1
+Waste Management,2439,COMPLETE,1
+GFL,2435,COMPLETE,1
+Rumpke,1474,COMPLETE,1
+Waste Pro,1234,COMPLETE,1
+Cockey's Enterprises,1148,COMPLETE,1
+Universal Waste,1044,COMPLETE,1
+Robinson Waste,947,COMPLETE,1
+Standard Waste,764,COMPLETE,1
+Hamilton Alliance,730,COMPLETE,1
+Active Waste,603,COMPLETE,1
+Casella,532,COMPLETE,1
+Boren Brothers,531,COMPLETE,1
+Priority Waste,528,COMPLETE,2
+Aspen Waste,498,COMPLETE,2
+Meridian Waste,469,COMPLETE,2
+Best Cleaner,464,COMPLETE,2
+Frontier Waste,411,COMPLETE,2
+FCC Environmental,389,COMPLETE,2
+SmartTrash,376,COMPLETE,2
+Fusion Waste,353,COMPLETE,2
+LRS,332,COMPLETE,2
+Coastal Waste,330,COMPLETE,2
+Flood Brothers,326,COMPLETE,2
+Alaska Waste,307,COMPLETE,2
+Eagle Disposal,295,COMPLETE,2
+Papillion Sanitation,287,COMPLETE,2
+Ware Disposal,285,COMPLETE,2
+Murreys Disposal,282,COMPLETE,2
+Lawrence Waste,278,COMPLETE,2
+Capital Waste,277,COMPLETE,2
+American Disposal,274,COMPLETE,2
+Burrtec,272,COMPLETE,2
+Friedman Recycling,265,COMPLETE,2
+Navajo Sanitation,263,COMPLETE,2
+Waste Zero,262,COMPLETE,2
+Novak Sanitary,258,COMPLETE,2
+Liberty Waste,253,COMPLETE,2
+Win Waste,248,COMPLETE,2
+Best Way Disposal,244,COMPLETE,2
+EcoSouth,229,COMPLETE,2
+Athens Services,223,COMPLETE,2
+Compactor Rentals of America,221,COMPLETE,2
+Tower Compactor,197,COMPLETE,3
+American Recycling,194,COMPLETE,3
+Homewood Disposal,193,COMPLETE,3
+CR&R,181,COMPLETE,3
+Kimble,180,COMPLETE,3
+Harter's,179,COMPLETE,3
+Redbox+,176,COMPLETE,3
+CRI Curbside,174,COMPLETE,3
+Delta Waste,171,COMPLETE,3
+Rocky Ridge,166,COMPLETE,3
+SBC Waste,157,COMPLETE,3
+Interstate Waste,157,COMPLETE,3
+National Equipment Solutions,154,COMPLETE,3
+EL Harvey,153,COMPLETE,3
+Walters Recycling,147,COMPLETE,3
+Specific Waste,146,COMPLETE,3
+Wasatch Waste,145,COMPLETE,3
+Empire Waste,143,COMPLETE,3
+Apex Waste,132,COMPLETE,3
+JP Mascaro,125,COMPLETE,3
+Huntsville Hauling,121,COMPLETE,3
+Eco-Tech,119,COMPLETE,3
+Boyas Recycling,119,COMPLETE,3
+My Trash,118,COMPLETE,3
+Panzarella Waste,116,COMPLETE,3
+EDCO Disposal,116,COMPLETE,3
+Metalpro,113,COMPLETE,3
+Idaho Falls Utilities,112,COMPLETE,3
+RAM Waste,111,COMPLETE,3
+Las Vegas Recycling,110,COMPLETE,3
+County Hauling,110,COMPLETE,3
+Nitti Sanitation,108,COMPLETE,3
+KMG Hauling,108,COMPLETE,3
+Mountain State Waste,106,COMPLETE,3
+Howard Disposal,103,COMPLETE,3
+Mark Dunning,102,COMPLETE,3
+VLS Environmental,99,COMPLETE,3
+121 Disposal,98,COMPLETE,3
+Lightning Disposal,98,COMPLETE,3
+Renewable Resources,96,COMPLETE,3
+Detroit Disposal,96,COMPLETE,3
+Atlas Disposal,96,COMPLETE,3
+Stevens Disposal,95,COMPLETE,3
+USA Waste,94,COMPLETE,3
+ACES Disposal,92,COMPLETE,3
+All American Waste,91,COMPLETE,3
+Wise Environmental,91,COMPLETE,3
+Nexus Disposal,90,COMPLETE,3
+Five Star Waste,88,COMPLETE,3
+KnightHorst,87,COMPLETE,3
+RDT Inc,87,COMPLETE,3
+All Waste,86,COMPLETE,3
+Trash Taxi,84,COMPLETE,3
+Patriot Waste,84,COMPLETE,3
+Arrowaste,83,COMPLETE,3
+Ace Recycling,83,COMPLETE,3
+Heavenly Trash,82,COMPLETE,3
+Texas Disposal,82,COMPLETE,3
+Disposal Management,82,COMPLETE,3
+Live Oak,81,COMPLETE,3
+Ankeny Sanitation,79,COMPLETE,3
+Granger Waste,79,COMPLETE,3
+Solid Waste Authority,78,COMPLETE,3
+Stericycle,78,COMPLETE,3
+Tiger Sanitation,78,COMPLETE,3
+Troiano Waste,78,COMPLETE,3
+Basin Disposal,77,COMPLETE,3
+GHW Waste,74,COMPLETE,3
+Grizzly Disposal,71,COMPLETE,3
+City of Meridian,71,COMPLETE,3
+Becker360,71,COMPLETE,3
+Pete & Pete,70,COMPLETE,3
+Blue Diamond Disposal,69,COMPLETE,3
+Valley Vista,69,COMPLETE,3
+SSW Frontload,68,COMPLETE,3
+Velpen Trucking,68,COMPLETE,3
+Gotta Go Waste,66,COMPLETE,3
+Louisiana Waste,65,COMPLETE,3
+ABC Waste,65,COMPLETE,3
+Smith Creek,65,COMPLETE,3
+JLT Trucking,64,COMPLETE,3
+Conigliaro,64,COMPLETE,3
+Liberty Disposal,64,COMPLETE,3
+ZARC Recycling,63,COMPLETE,3
+1-800-Got-Junk,62,COMPLETE,3
+Ryland Environmental,62,COMPLETE,3
+Independent Recycling,62,COMPLETE,3
+Moore Coal,61,COMPLETE,3
+Premier Waste,60,COMPLETE,3
+Honolulu Disposal,59,COMPLETE,3
+D Crescio Trucking,58,COMPLETE,3
+Pelican Waste,58,COMPLETE,3
+Great Waste,57,COMPLETE,3
+NK Waste,57,COMPLETE,3
+Modern Recycling,57,COMPLETE,3
+Redgate Disposal,56,COMPLETE,3
+WG Waste,56,COMPLETE,3
+Community Waste,56,COMPLETE,3
+City of Boise,56,COMPLETE,3
+Western Disposal,56,COMPLETE,3
+Community Disposal,55,COMPLETE,3
+City of Jackson,54,COMPLETE,3
+Gulf Coast Containers,54,COMPLETE,3
+Amwaste,53,COMPLETE,3
+Lexington Site Services,53,COMPLETE,3
+Gateway Disposal,53,COMPLETE,3
+TK Trash,51,COMPLETE,3
+Recology,51,COMPLETE,3
+J&K Trash,49,COMPLETE,4
+Specialty Pallet,49,COMPLETE,4
+Clean Slate,49,COMPLETE,4
+Olympic Compactor Rentals,49,COMPLETE,4
+Walker Lake Disposal,49,COMPLETE,4
+Trident Waste,49,COMPLETE,4
+Blue Hills Environmental,48,COMPLETE,4
+Ohio Valley Waste,47,COMPLETE,4
+City Waste,47,COMPLETE,4
+Vogel Disposal,47,COMPLETE,4
+WillScot,46,COMPLETE,4
+Boro Wide,46,COMPLETE,4
+Direct Waste Services,44,COMPLETE,4
+Cards Mo,44,COMPLETE,4
+Chrin Hauling,44,COMPLETE,4
+Roll Off Systems,43,COMPLETE,4
+Lakeshore Recycling,43,COMPLETE,4
+Waste Services LLC,42,COMPLETE,4
+Advance Machine & Hydraulic,42,COMPLETE,4
+Cooks Wastepaper,42,COMPLETE,4
+EOMS Recycling,42,COMPLETE,4
+Mid Valley Disposal,41,COMPLETE,4
+Modern Corporation,41,COMPLETE,4
+Atlantic Waste,41,COMPLETE,4
+Vista Recycling,41,COMPLETE,4
+Green Guys,41,COMPLETE,4
+Ace Waste Systems,41,COMPLETE,4
+Schaap Sanitation,40,COMPLETE,4
+Conex Recycling,39,COMPLETE,4
+Pascon,39,COMPLETE,4
+Western Elite,39,COMPLETE,4
+City of Blackfoot,39,COMPLETE,4
+Thompson Sanitation,39,COMPLETE,4
+SSW-Box Services,38,COMPLETE,4
+Cards Recycling,38,COMPLETE,4
+Southern Sanitation,38,COMPLETE,4
+Florida Express Waste,37,COMPLETE,4
+Chambersburg Waste Paper,37,COMPLETE,4
+Hill Country Waste,36,COMPLETE,4
+DeKalb County,36,COMPLETE,4
+Brask Enterprises,36,COMPLETE,4
+Curbside,36,COMPLETE,4
+Total Reclaim,35,COMPLETE,4
+Kahut Waste,35,COMPLETE,4
+All Metals Recycling,35,COMPLETE,4
+Orlando Waste Paper,35,COMPLETE,4
+F & L Construction,35,COMPLETE,4
+Black Hawk Waste,35,COMPLETE,4
+CWPM,35,COMPLETE,4
+Dependable Sanitation,35,COMPLETE,4
+Advance Disposal,34,COMPLETE,4
+Greif,34,COMPLETE,4
+Heiberg Garbage,34,COMPLETE,4
+City of Fargo,34,COMPLETE,4
+Midwest Paper,34,COMPLETE,4
+AAA Disposal Service,34,COMPLETE,4
+Jay Mecham's,34,COMPLETE,4
+River Parish Disposal,34,COMPLETE,4
+First Piedmont,33,COMPLETE,4
+Southern Illinois Waste,33,COMPLETE,4
+Kootenai County Solid Waste,33,COMPLETE,4
+Waste Path,33,COMPLETE,4
+South Shore Disposal,33,COMPLETE,4
+Intermountain Disposal,33,COMPLETE,4
+Prestige Disposal,33,COMPLETE,4
+Lawrence County Solid Waste,33,COMPLETE,4
+Trash Control,33,COMPLETE,4
+UDP TN Hauling,33,COMPLETE,4
+Sonny's Solid Waste,33,COMPLETE,4
+Cavossa Disposal,32,COMPLETE,4
+Island Disposal,31,COMPLETE,4
+Pennohio,31,COMPLETE,4
+Pak Rite Rentals,31,COMPLETE,4
+Pellitteri,30,COMPLETE,4
+Indiana Waste,30,COMPLETE,4
+Reliable Sanitation,30,COMPLETE,4
+County Waste Systems,30,COMPLETE,4
+Waste Harmonics,29,COMPLETE,4
+Texas Pride Disposal,29,COMPLETE,4
+K-Town Disposal,29,COMPLETE,4
+Debris to Green,28,COMPLETE,4
+Pacific Waste,28,COMPLETE,4
+Reworld,28,COMPLETE,4
+Western Kane County,28,COMPLETE,4
+Geodom Carting,28,COMPLETE,4
+Grogan Waste,27,COMPLETE,4
+Northern Waste,27,COMPLETE,4
+Circle Sanitation,27,COMPLETE,4
+Garden Isle Disposal,27,COMPLETE,4
+CSD Disposal,27,COMPLETE,4
+ABC Disposal Systems,26,COMPLETE,4
+Royal Document Destruction,26,COMPLETE,4
+All Florida Scrap Metals,26,COMPLETE,4
+AT Disposal,26,COMPLETE,4
+Grace Hauling,26,COMPLETE,4
+Pro Waste Services,26,COMPLETE,4
+Sanitary Service Company,25,COMPLETE,4
+Total Disposal Inc,25,COMPLETE,4
+Countryside Disposal,25,COMPLETE,4
+West Oahu Aggregate,25,COMPLETE,4
+AWS,25,COMPLETE,4
+Roosevelt UT,25,COMPLETE,4
+IV Waste,25,COMPLETE,4
+Richardson Waste,25,COMPLETE,4
+Marborg,24,COMPLETE,4
+Burgmeier's Hauling,24,COMPLETE,4
+J&T Environmental,24,COMPLETE,4
+Lusk Disposal,24,COMPLETE,4
+TFC Recycling,24,COMPLETE,4
+City of Pembroke Pines,24,COMPLETE,4
+Uribe Refuse,24,COMPLETE,4
+BNB Disposal,24,COMPLETE,4
+City of Deerfield Beach,24,COMPLETE,4
+Dunham,24,COMPLETE,4
+Tri-City Disposal,24,COMPLETE,4
+Hart Sanitation,24,COMPLETE,4
+Walters Sanitary Service,24,COMPLETE,4
+K & K Sanitation,23,COMPLETE,4
+Salandro Refuse,23,COMPLETE,4
+American Waste Control,23,COMPLETE,4
+Hugill Sanitation,23,COMPLETE,4
+American Sanitation,23,COMPLETE,4
+Treasure Coast Recycling,23,COMPLETE,4
+BP Trucking,23,COMPLETE,4
+Cleeton Sanitation,23,COMPLETE,4
+Stryker Environmental,23,COMPLETE,4
+CRP Sanitation,22,COMPLETE,4
+Redwood Waste,22,COMPLETE,4
+Cards KS,22,COMPLETE,4
+G2 Revolution,22,COMPLETE,4
+Suburban Waste Services,22,COMPLETE,4
+Penn Waste,22,COMPLETE,4
+Wayne County Utah,22,COMPLETE,4
+Charlie's Waste,22,COMPLETE,4
+The Trash Guys,22,COMPLETE,4
+CTL 3R Technology,22,COMPLETE,4
+Butler Disposal Systems,22,COMPLETE,4
+Hometown Sanitation,21,COMPLETE,4
+Filco,21,COMPLETE,4
+Mike's Rubbish,21,COMPLETE,4
+Green Planet 21,21,COMPLETE,4
+City of Conyers,21,COMPLETE,4
+TransTrash,21,COMPLETE,4
+Earthwise Waste Solutions,21,COMPLETE,4
+North Georgia Waste,21,COMPLETE,4
+AM Disposal,21,COMPLETE,4
+Swinger Sanitation,21,COMPLETE,4
+Nevada Recycling,21,COMPLETE,4
+Major Waste,21,COMPLETE,4
+Star Waste,20,COMPLETE,4
+Blue Ridge Waste,20,COMPLETE,4
+Hoss Disposal,20,COMPLETE,4
+Updike Industries,20,COMPLETE,4
+MCUD Manatee,20,COMPLETE,4
+Kern County Public Works,20,COMPLETE,4
+Black Earth Compost,20,COMPLETE,4
+RAD Curbside,20,COMPLETE,4
+Iron City Express,20,COMPLETE,4
+Marpan Supply,20,COMPLETE,4
+Larry D Marshall Disposal,20,COMPLETE,4
+WM Compactor Solutions,19,COMPLETE,4
+Cogent Waste Solutions,19,COMPLETE,4
+Hogland's Transfer,19,COMPLETE,4
+City of Nampa,19,COMPLETE,4
+L&L Site Services,19,COMPLETE,4
+Jettison Environmental,19,COMPLETE,4
+BCC Waste Solutions,19,COMPLETE,4
+Midwest Sanitation,19,COMPLETE,4
+Forever Clean,19,COMPLETE,4
+Roadrunner Sanitation,19,COMPLETE,4
+Myers Container Service,19,COMPLETE,4
+Recycling Services of Florida,19,COMPLETE,4
+Nauset Disposal,19,COMPLETE,4
+Greenway Waste,18,COMPLETE,4
+Eco Sanitation,18,COMPLETE,4
+Bridge City Sanitation,18,COMPLETE,4
+City of Sherman,18,COMPLETE,4
+4G Futures,18,COMPLETE,4
+A-1 Disposal,18,COMPLETE,4
+Martin Environmental,18,COMPLETE,4
+Miller Enterprises,18,COMPLETE,4
+City of Bardstown,18,COMPLETE,4
+Omni,18,COMPLETE,4
+Fogle's,18,COMPLETE,4
+Mid South Waste,18,COMPLETE,4
+Willey Disposal,18,COMPLETE,4
+Trash Rangers,18,COMPLETE,4
+The Trash Man,18,COMPLETE,4
+NEI Pennsylvania,18,COMPLETE,4
+T & G Sanitation,18,COMPLETE,4
+NS Disposal,18,COMPLETE,4
+Haul Away Rubbish,18,COMPLETE,4
+Hotchkiss Disposal,17,COMPLETE,4
+Whitecap Waste,17,COMPLETE,4
+Apple Valley Waste,17,COMPLETE,4
+Yreka Transfer,17,COMPLETE,4
+Tri-County Industries,17,COMPLETE,4
+Rockwood Sustainable Solutions,16,COMPLETE,4
+Dedicated Dumpster Service,16,COMPLETE,4
+Absolute Waste,16,COMPLETE,4
+Alpha Waste Disposal,16,COMPLETE,4
+Container Rental Co,16,COMPLETE,4
+Jim's Sanitation,16,COMPLETE,4
+Golden Triangle Waste,16,COMPLETE,4
+Hughes Trash Removal,16,COMPLETE,4
+McGree Trucking,15,COMPLETE,4
+Cedar Grove,15,COMPLETE,4
+Hillside Solutions,15,COMPLETE,4
+City of Mesquite,15,COMPLETE,4
+Orlando Recycling,15,COMPLETE,4
+Choice Waste Services,15,COMPLETE,4
+Smurfit,15,COMPLETE,4
+Elite Recycling,15,COMPLETE,4
+LK Specialties,15,COMPLETE,4
+Pro Disposal,15,COMPLETE,4
+Mt Diablo Resource Recovery,15,COMPLETE,4
+Bliss Environmental,15,COMPLETE,4
+Bi-County Disposal,15,COMPLETE,4
+LaVeine Sanitation,15,COMPLETE,4
+City of Tulsa,15,COMPLETE,4
+Al Clawson Disposal,15,COMPLETE,4
+Art's Garbage,15,COMPLETE,4
+California Waste Recovery,15,COMPLETE,4
+Good's Disposal,15,COMPLETE,4
+Tygarts Valley Sanitation,15,COMPLETE,4
+Keys Sanitary,15,COMPLETE,4
+Rapid Removal,15,COMPLETE,4
+City of Dickinson,15,COMPLETE,4
+EZ Disposal,15,COMPLETE,4
+Ozark Disposal,15,COMPLETE,4
+City of Sulphur Springs,15,COMPLETE,4
+Waste Away,14,COMPLETE,4
+Toro Waste,14,COMPLETE,4
+Mike Spano & Sons,14,COMPLETE,4
+Shawnee County Solid Waste,14,COMPLETE,4
+Hiltz,14,COMPLETE,4
+City of Bakersfield,14,COMPLETE,4
+Chesapeake Waste,14,COMPLETE,4
+Taylor & Sons,14,COMPLETE,4
+A&W Iron Metal,14,COMPLETE,4
+Cumberland Services,14,COMPLETE,4
+Ameriwaste,14,COMPLETE,4
+KC Disposal,14,COMPLETE,4
+U & I Sanitation,14,COMPLETE,4
+Tropical Trash,14,COMPLETE,4
+R-Local Sanitation,14,COMPLETE,4
+Goode Companies,14,COMPLETE,4
+Mills Brothers,14,COMPLETE,4
+Golden Environmental,13,COMPLETE,4
+Pullman Disposal,13,COMPLETE,4
+Escondido Disposal,13,COMPLETE,4
+Basin Haulage,13,COMPLETE,4
+DC Waste,13,COMPLETE,4
+City of Great Falls,13,COMPLETE,4
+Junk Removed Now,13,COMPLETE,4
+Waterman Recycling,13,COMPLETE,4
+Diamond Disposal,13,COMPLETE,4
+Lake Area Disposal,13,COMPLETE,4
+Fayette Waste,13,COMPLETE,4
+Miedema Sanitation,13,COMPLETE,4
+Marick's Waste Disposal,13,COMPLETE,4
+R&S Waste,13,COMPLETE,4
+Roadrunner Rubbish,13,COMPLETE,4
+Kings Roll-Off,13,COMPLETE,4
+Valley Sanitation LLC,13,COMPLETE,4
+Arg Services,13,COMPLETE,4
+Modern Disposal,13,COMPLETE,4
+Shank Waste,13,COMPLETE,4
+Bulldog Disposal,13,COMPLETE,4
+BKI Recycling,13,COMPLETE,4
+Wasteless Solutions,13,COMPLETE,4
+Florida Waste Solutions,13,COMPLETE,4
+Wyoming Waste Services,13,COMPLETE,4
+AJ Waste Systems,13,COMPLETE,4
+CWRR,12,COMPLETE,4
+Lake Disposal Service,12,COMPLETE,4
+Sage Disposal,12,COMPLETE,4
+Tri-State Disposal,12,COMPLETE,4
+Boston Baler,12,COMPLETE,4
+Bloom Waste,12,COMPLETE,4
+City of Oakland Park,12,COMPLETE,4
+Sutton Disposal,12,COMPLETE,4
+Madison Materials,12,COMPLETE,4
+Lemhi Sanitation,12,COMPLETE,4
+Control Waste,12,COMPLETE,4
+Breezy Hollow,12,COMPLETE,4
+Lift Waste,12,COMPLETE,4
+Enevo,12,COMPLETE,4
+Royal Oak Recycling,12,COMPLETE,4
+Valley Waste Service,12,COMPLETE,4
+Talon Sanitation,12,COMPLETE,4
+Town & Country Disposal,12,COMPLETE,4
+Davis Disposal,11,COMPLETE,4
+Crane Roll-Off,11,COMPLETE,4
+Express Disposal,11,COMPLETE,4
+Arrowhead Waste,11,COMPLETE,4
+Maverick Waste,11,COMPLETE,4
+Grand Rapids Iron,11,COMPLETE,4
+Patterson Sanitation,11,COMPLETE,4
+Texas Dumpsters,11,COMPLETE,4
+Tahoe Basin Container,11,COMPLETE,4
+South Tahoe Refuse,11,COMPLETE,4
+Town of Dutch John,11,COMPLETE,4
+The Shred Truck,11,COMPLETE,4
+Pacific Disposal,11,COMPLETE,4
+Roberts Enterprises,11,COMPLETE,4
+Hepaco,11,COMPLETE,4
+Moler Sanitation,10,COMPLETE,4
+Olson Sanitation,10,COMPLETE,4
+Harley Hollan,10,COMPLETE,4
+Ava's Waste Removal,10,COMPLETE,4
+H-Town Hauling,10,COMPLETE,4
+City of Richardson,10,COMPLETE,4
+Miles City Sanitation,10,COMPLETE,4
+P&M Reis Trucking,10,COMPLETE,4
+City of Temple TX,10,COMPLETE,4
+Klumm Brothers,10,COMPLETE,4
+Dillon Disposal,10,COMPLETE,4
+City of Athens GA,10,COMPLETE,4
+JD Parker,10,COMPLETE,4
+Smoky Mountain Waste,10,COMPLETE,4
+LCI Services,10,COMPLETE,4
+Adam's Disposal,10,COMPLETE,4
+Canusa Hershman,10,COMPLETE,4
+Edge Waste,10,COMPLETE,4
+Woodward's Disposal,10,COMPLETE,4
+Ridgerunner Container,10,COMPLETE,4
+Brothers Disposal,10,COMPLETE,4
+Bozzuto BRS Services,10,COMPLETE,4
+Miamitown Auto Parts,10,COMPLETE,4
+Full Circle Recycling,10,COMPLETE,4
+Salt River Pima,10,COMPLETE,4
+Chris Rizzo Trucking,10,COMPLETE,4
+Green OBKY,10,COMPLETE,4
+Rhino Waste,10,COMPLETE,4
+City of Tullahoma,10,COMPLETE,4
+City of Culver City,10,COMPLETE,4
+Sonoco Recycling,10,COMPLETE,4
+Midwest Disposal IL,10,COMPLETE,4
+City of Mesa,10,COMPLETE,4
+Troupe Waste,10,COMPLETE,4
+Island Refuse,9,COMPLETE,5
+BTS Inc,9,COMPLETE,5
+Bud's Clean Up Service,9,COMPLETE,5
+City of Hickory,9,COMPLETE,5
+Pacific Sanitation Co,9,COMPLETE,5
+City of Grand Junction,9,COMPLETE,5
+Friends Garbage,9,COMPLETE,5
+Oregon City Garbage,9,COMPLETE,5
+Darob,9,COMPLETE,5
+City of Visalia,9,COMPLETE,5
+City of Sidney,9,COMPLETE,5
+Napa Recycling,9,COMPLETE,5
+Denali Disposal,9,COMPLETE,5
+Ramona Disposal,9,COMPLETE,5
+City of McDonough,9,COMPLETE,5
+Hilltopper Refuse,9,COMPLETE,5
+Cressman Sanitation,9,COMPLETE,5
+Rubatino Refuse,9,COMPLETE,5
+Upper Valley Disposal,9,COMPLETE,5
+TDS LLC,9,COMPLETE,5
+Waste Masters,9,COMPLETE,5
+Lance Refuse,9,COMPLETE,5
+Trinity Disposal,9,COMPLETE,5
+Akat Scrap Metal,9,COMPLETE,5
+American Eagle Waste,9,COMPLETE,5
+Nowrush Recycling,9,COMPLETE,5
+City of Douglasville,9,COMPLETE,5
+NVA Services,9,COMPLETE,5
+Mavilyn Industries,9,COMPLETE,5
+Seagraves Plumbing,9,COMPLETE,5
+A&I Pallets,9,COMPLETE,5
+City of Wolf Point,9,COMPLETE,5
+C&S Disposal,8,COMPLETE,5
+Thomas Trash,8,COMPLETE,5
+Paso Robles Waste,8,COMPLETE,5
+City of Fayette,8,COMPLETE,5
+Big River Disposal,8,COMPLETE,5
+Ferrell's Disposal,8,COMPLETE,5
+Alameda County Industries,8,COMPLETE,5
+Watertown Iron,8,COMPLETE,5
+Tim's Trash Service,8,COMPLETE,5
+Elecke,8,COMPLETE,5
+McCullough Rubbish,8,COMPLETE,5
+Metech Recycling,8,COMPLETE,5
+Junk Solutions,8,COMPLETE,5
+Garland County Landfill,8,COMPLETE,5
+DC Metals,8,COMPLETE,5
+Kurtzman's Sanitation,8,COMPLETE,5
+J&Jay Services,8,COMPLETE,5
+A&J Trash,8,COMPLETE,5
+BestTrash,8,COMPLETE,5
+Town of Gardnerville,8,COMPLETE,5
+Wisneski Westmoreland,8,COMPLETE,5
+City of Tracy,8,COMPLETE,5
+Econo Waste,8,COMPLETE,5
+Iron Mountain,8,COMPLETE,5
+Pike County Solid Waste,8,COMPLETE,5
+Clark's Disposal,8,COMPLETE,5
+Document Destruction of Virginia,8,COMPLETE,5
+Okon Recycling,8,COMPLETE,5
+Suburban Disposal,8,COMPLETE,5
+Solid Rock Waste,8,COMPLETE,5
+Ideal Trash and Recycling,8,COMPLETE,5
+Styro Recycle,8,COMPLETE,5
+City of Del Rio,8,COMPLETE,5
+Agri-Cycle,8,COMPLETE,5
+Metalico Youngstown,7,COMPLETE,5
+City of Sallisaw,7,COMPLETE,5
+Local Waste Solution,7,COMPLETE,5
+Vanderpoel Disposal,7,COMPLETE,5
+AG Logistics,7,COMPLETE,5
+Eastern Waste,7,COMPLETE,5
+Roll-Off Chick,7,COMPLETE,5
+Empire Disposal,7,COMPLETE,5
+Snake River Rubbish,7,COMPLETE,5
+Tovar Equipment,7,COMPLETE,5
+Capital City,7,COMPLETE,5
+AB-8 Waste Solutions,7,COMPLETE,5
+Anaconda Disposal,7,COMPLETE,5
+Jackson County Solid Waste,7,COMPLETE,5
+A1 Porta Potty,7,COMPLETE,5
+Kamps Pallets,7,COMPLETE,5
+BCDA The Trash Company,7,COMPLETE,5
+Coles County Sanitation,7,COMPLETE,5
+Timmons Waste Service,7,COMPLETE,5
+Deep South Sanitation,7,COMPLETE,5
+Mazza Recycling,7,COMPLETE,5
+Becker Complete,7,COMPLETE,5
+City of Lamar,7,COMPLETE,5
+Hamilton Recycling Disposal,7,COMPLETE,5
+City of Madisonville,7,COMPLETE,5
+City of Somerset,7,COMPLETE,5
+Franklin Disposal,7,COMPLETE,5
+Shular's Trash Service,7,COMPLETE,5
+Howie's Trash Service,7,COMPLETE,5
+Douglas Disposal,7,COMPLETE,5
+Blue Moon,7,COMPLETE,5
+Kohlmorgan Hauling,7,COMPLETE,5
+WasteVision,7,COMPLETE,5
+Greenbrier Valley Solid Waste,7,COMPLETE,5
+Southwest Sanitation,7,COMPLETE,5
+City of Quincy,7,COMPLETE,5
+A-1 Little John,7,COMPLETE,5
+City of Mont Belvieu,7,COMPLETE,5
+Norris Sanitation,7,COMPLETE,5
+Helgerson Property Maintenance,7,COMPLETE,5
+All Star Roll-Off,7,COMPLETE,5
+Emterra Environmental,7,COMPLETE,5
+A&C Waste Collection,7,COMPLETE,5
+BFI Waste,7,COMPLETE,5
+Far West Recycling,7,COMPLETE,5
+Allen Disposal,7,COMPLETE,5
+Hopper Disposal,7,COMPLETE,5
+Horn Sanitation,6,COMPLETE,5
+Ogborne Hauling,6,COMPLETE,5
+East Central Kansas,6,COMPLETE,5
+Miller and Sons Disposal,6,COMPLETE,5
+Thompson's Sanitary Service,6,COMPLETE,5
+Stewart Sanitation,6,COMPLETE,5
+Niese Hauling,6,COMPLETE,5
+Washler Garbage,6,COMPLETE,5
+Martin's Trash Service,6,COMPLETE,5
+MDS Waste,6,COMPLETE,5
+Humboldt County Landfill,6,COMPLETE,5
+B&L Disposal,6,COMPLETE,5
+Revolution Recycling,6,COMPLETE,5
+Madden Sanitation,6,COMPLETE,5
+New Prague Sanitary,6,COMPLETE,5
+North Country Disposal,6,COMPLETE,5
+T-Mac Inc,6,COMPLETE,5
+Wemiga Waste,6,COMPLETE,5
+Minnkota Recycling,6,COMPLETE,5
+Checksammy,6,COMPLETE,5
+Humpty Dumpsters,6,COMPLETE,5
+Porter Trash,6,COMPLETE,5
+Prolex Compacting,6,COMPLETE,5
+Anchorage Solid Waste,6,COMPLETE,5
+South San Francisco Scavenger,6,COMPLETE,5
+Waste Control,6,COMPLETE,5
+Golden Valley Disposal,6,COMPLETE,5
+Cowboy Sanitation,6,COMPLETE,5
+Top of the Line Dumpsters,6,COMPLETE,5
+Ely Disposal Service,6,COMPLETE,5
+Missoula Compost,6,COMPLETE,5
+Ace Equipment Company,6,COMPLETE,5
+City of Fort Smith,6,COMPLETE,5
+Gear For Waste,6,COMPLETE,5
+Coastal Environmental Service,6,COMPLETE,5
+DuMontelle Waste,6,COMPLETE,5
+Absolute Services,6,COMPLETE,5
+Georgetown Paper Stock,6,COMPLETE,5
+Civicorps Recycling,6,COMPLETE,5
+Pratt Sanitation,6,COMPLETE,5
+All States Services,6,COMPLETE,5
+Step Up Disposals,6,COMPLETE,5
+Weidle Sanitation,6,COMPLETE,5
+My Green Michigan,6,COMPLETE,5
+City of Colby,6,COMPLETE,5
+Nisswa Sanitation,6,COMPLETE,5
+Palm Springs Disposal,6,COMPLETE,5
+Harper Sanitation,5,COMPLETE,5
+Reliable Paper,5,COMPLETE,5
+Enviromax Recycling,5,COMPLETE,5
+City of Vinita,5,COMPLETE,5
+Brookings Dumpster Service,5,COMPLETE,5
+NW Dumpsters,5,COMPLETE,5
+Gresham Sanitary Service,5,COMPLETE,5
+Happen Ventures,5,COMPLETE,5
+P&S Trucking,5,COMPLETE,5
+Nisly Brothers,5,COMPLETE,5
+Real Waste Solutions,5,COMPLETE,5
+City of Winters,5,COMPLETE,5
+City of Scottsbluff,5,COMPLETE,5
+City of Sevierville,5,COMPLETE,5
+Young Refuse,5,COMPLETE,5
+AMG Resources,5,COMPLETE,5
+Total Recycling Tampa,5,COMPLETE,5
+J&R Sanitation,5,COMPLETE,5
+D&S Portable Toilets,5,COMPLETE,5
+City of Cartersville,5,COMPLETE,5
+Capital Area Refuse,5,COMPLETE,5
+City of Socorro,5,COMPLETE,5
+Long Beach Container,5,COMPLETE,5
+Westside Disposal,5,COMPLETE,5
+Mountain Disposal Inc,5,COMPLETE,5
+Golden Eagle Services,5,COMPLETE,5
+Dyersburg Gas & Water,5,COMPLETE,5
+Coos Bay Sanitary,5,COMPLETE,5
+Edward Arnold Scrap Processors,5,COMPLETE,5
+North Lincoln Sanitary,5,COMPLETE,5
+Sunny Trash Hauling,5,COMPLETE,5
+City of Durant,4,COMPLETE,5
+501 Sanitation,4,COMPLETE,5
+Delta Disposal,4,COMPLETE,5
+Dayne's Waste Disposal,4,COMPLETE,5
+Roseburg Disposal,4,COMPLETE,5
+Gil's Sanitation,4,COMPLETE,5
+Mauldin Trash,4,COMPLETE,5
+City of Craig,4,COMPLETE,5
+Standing Rock Sanitation,4,COMPLETE,5
+A&L Compaction,4,COMPLETE,5
+Mackenzie Disposal,4,COMPLETE,5
+SRG Spartanburg,4,COMPLETE,5
+J&J Sanitation,4,COMPLETE,5
+JDog Junk Removal,4,COMPLETE,5
+Food To Power,4,COMPLETE,5
+Southern Disposal AR,4,COMPLETE,5
+City of Devils Lake,4,COMPLETE,5
+Desert Green Disposal,4,COMPLETE,5
+Tri-State Carting,4,COMPLETE,5
+Gibson Truck Service,4,COMPLETE,5
+Chum Refuse,4,COMPLETE,5
+Town of Lusk,4,COMPLETE,5
+William Sullivan,4,COMPLETE,5
+Dirty Boyz Sanitation,4,COMPLETE,5
+TNR Hauling,4,COMPLETE,5
+City of Snellville,4,COMPLETE,5
+City of Loganville,4,COMPLETE,5
+City of Laramie,4,COMPLETE,5
+Mulberry Ventures,4,COMPLETE,5
+Break It Down,4,COMPLETE,5
+Ace Sanitation Service,3,COMPLETE,5
+Centre Water Works,3,COMPLETE,5
+Town of Greeneville,3,COMPLETE,5
+City of Henagar,3,COMPLETE,5
+D&S Waste,3,COMPLETE,5
+TEG Lease,3,COMPLETE,5
+Hudgins Disposal,3,COMPLETE,5
+Dodd's Trash Hauling,2,COMPLETE,5
+Generated Materials Recovery,2,COMPLETE,5
+City of Redwood,2,COMPLETE,5
+Reed Maintenance,2,COMPLETE,5
+EWE Equipment,2,COMPLETE,5
+Kept Companies,2,COMPLETE,5
+Redfish Recycling,2,COMPLETE,5
+Brew Crew Environmental,2,COMPLETE,5
+Community Sanitation,2,COMPLETE,5
+Zero Waste,1,COMPLETE,5

@@ -1,0 +1,456 @@
+{
+  "vendor_name": "Universal Waste Systems",
+  "format_label": "uws_invoice",
+  "routing_regex": "UNIVERSAL\\s+WASTE\\s+SYSTEMS\\s+INC",
+  "routing_flags": [
+    "IGNORECASE"
+  ],
+  "routing_priority": 50,
+  "is_active": true,
+  "sample_md5": null,
+  "extraction_stages": [
+    {
+      "name": "invoice_number",
+      "method": "search",
+      "pattern": "Invoice\\s+Number:\\s*(?P<invoice_number>\\d{7,10})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "invoice_number": "invoice_number"
+      }
+    },
+    {
+      "name": "invoice_date",
+      "method": "search",
+      "pattern": "Invoice\\s+Date:\\s*(?P<invoice_date>\\d{2}/\\d{2}/\\d{2})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "invoice_date": "invoice_date"
+      }
+    },
+    {
+      "name": "account_number",
+      "method": "search",
+      "pattern": "Customer\\s+Number:\\s*(?P<account_number>\\d+)",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "account_number": "account_number"
+      }
+    },
+    {
+      "name": "bill_total",
+      "method": "search",
+      "pattern": "Current\\s+Charges\\s+\\$?(?P<bill_total>[\\d,]+\\.\\d{2})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "bill_total": "bill_total"
+      }
+    },
+    {
+      "name": "body",
+      "method": "body_extract",
+      "pattern": "Date\\s+Qty\\s+Description\\s+Reference\\s+Charges\\s+Credits\\s+Fees\\s+Extended\\s*\\n(?P<body>.*?)Total\\s+New\\s+Charges:",
+      "flags": [
+        "DOTALL",
+        "IGNORECASE"
+      ],
+      "output_field": "_body",
+      "group": "body"
+    },
+    {
+      "name": "service_address",
+      "method": "search",
+      "pattern": "Site\\s+\\d+-\\d+:\\s*(?P<service_address>[^\\n]+)",
+      "flags": ["IGNORECASE"],
+      "field_map": {"service_address": "service_address"}
+    }
+  ],
+  "execution_plan": [
+    "bill_total_parse",
+    "date_format"
+  ],
+  "transform_rules": {
+    "bill_total_parse": {
+      "type": "currency_parse",
+      "field": "bill_total",
+      "strip_dollar": true,
+      "strip_comma": true
+    },
+    "date_format": {
+      "type": "date_parse",
+      "field": "invoice_date",
+      "formats": [
+        "%m/%d/%y"
+      ]
+    },
+    "equipment_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "equipment_type",
+      "rules": [
+        {
+          "keywords": "roll off",
+          "label": "ROLL_OFF"
+        },
+        {
+          "keywords": "roll off",
+          "label": "ROLL_OFF"
+        },
+        {
+          "keywords": "fl",
+          "label": "FRONT_LOAD"
+        },
+        {
+          "keywords": "organics",
+          "label": "CART"
+        },
+        {
+          "keywords": "org.s",
+          "label": "CART"
+        }
+      ]
+    },
+    "equipment_size_extract": {
+      "type": "regex_capture",
+      "source_field": "description",
+      "pattern": "(\\d+)YD",
+      "output_field": "_size_num",
+      "group": 1,
+      "flags": [
+        "IGNORECASE"
+      ]
+    },
+    "equipment_size_unit_yd": {
+      "type": "regex_capture",
+      "source_field": "description",
+      "pattern": "\\d+YD",
+      "output_field": "_size_unit",
+      "group": 0,
+      "flags": [
+        "IGNORECASE"
+      ],
+      "set_value": "YD"
+    },
+    "equipment_size_extract_gal": {
+      "type": "regex_capture",
+      "source_field": "description",
+      "pattern": "(\\d+)G\\b",
+      "output_field": "_size_num",
+      "group": 1,
+      "flags": [
+        "IGNORECASE"
+      ],
+      "skip_if_set": [
+        "_size_num"
+      ]
+    },
+    "equipment_size_unit_gal": {
+      "type": "regex_capture",
+      "source_field": "description",
+      "pattern": "\\d+G\\b",
+      "output_field": "_size_unit",
+      "group": 0,
+      "flags": [
+        "IGNORECASE"
+      ],
+      "set_value": "GAL",
+      "skip_if_set": [
+        "_size_unit"
+      ]
+    },
+    "equipment_size_format": {
+      "type": "concat_fields",
+      "fields": [
+        "_size_num",
+        "_size_unit"
+      ],
+      "separator": " ",
+      "output_field": "equipment_size"
+    },
+    "material_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "material",
+      "rules": [
+        {
+          "keywords": "trash",
+          "label": "Trash"
+        },
+        {
+          "keywords": "rec",
+          "label": "Recycling"
+        },
+        {
+          "keywords": "organics",
+          "label": "Organics"
+        },
+        {
+          "keywords": "org.s",
+          "label": "Organics"
+        },
+        {
+          "keywords": "disposal",
+          "label": "Trash"
+        },
+        {
+          "keywords": "rental",
+          "label": "Trash"
+        }
+      ]
+    },
+    "schedule_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "schedule",
+      "rules": [
+        {
+          "keywords": "rental",
+          "label": "ON_CALL"
+        },
+        {
+          "keywords": "exchange",
+          "label": "ON_CALL"
+        },
+        {
+          "keywords": "disposal",
+          "label": "ON_CALL"
+        }
+      ],
+      "default": null
+    },
+    "charge_type_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "charge_type",
+      "rules": [
+        {
+          "keywords": "disposal",
+          "label": "Disposal"
+        },
+        {
+          "keywords": "exchange",
+          "label": "Haul"
+        },
+        {
+          "keywords": "rental",
+          "label": "Container Usage Charge"
+        },
+        {
+          "keywords": "haul",
+          "label": "Haul"
+        },
+        {
+          "keywords": "delivery",
+          "label": "Delivery"
+        }
+      ],
+      "default": "Pickup"
+    },
+    "charge_code_normalize": {
+      "type": "charge_normalize",
+      "charge_type_field": "charge_type",
+      "equipment_type_field": "equipment_type",
+      "output_field": "charge_code",
+      "equipment_class_map": {
+        "FRONT_LOAD": "commercial",
+        "CART": "commercial",
+        "ROLL_OFF": "industrial"
+      },
+      "charge_code_map": {
+        "Pickup": {
+          "commercial": "Monthly Service Commercial",
+          "industrial": "Monthly Service Industrial"
+        },
+        "Container Usage Charge": {
+          "commercial": "Monthly Rental Commercial",
+          "industrial": "Monthly Rental Industrial"
+        },
+        "Delivery": {
+          "commercial": "Delivery Commercial",
+          "industrial": "Delivery Industrial"
+        },
+        "Disposal": "Disposal Charge",
+        "Haul": "Empty & Return"
+      }
+    },
+    "parent_container_resolve": {
+      "type": "parent_container",
+      "charges_field": "_charges",
+      "inherit_fields": [
+        "equipment_type",
+        "equipment_size",
+        "material",
+        "schedule"
+      ],
+      "direction": "both",
+      "skip_zero": false
+    },
+    "renormalize_after_parent": {
+      "type": "renormalize_codes",
+      "charges_field": "_charges",
+      "charge_type_field": "charge_type",
+      "equipment_type_field": "equipment_type",
+      "output_field": "charge_code",
+      "equipment_class_map": {
+        "FRONT_LOAD": "commercial",
+        "CART": "commercial",
+        "ROLL_OFF": "industrial"
+      },
+      "charge_code_map": {
+        "Pickup": {
+          "commercial": "Monthly Service Commercial",
+          "industrial": "Monthly Service Industrial"
+        },
+        "Container Usage Charge": {
+          "commercial": "Monthly Rental Commercial",
+          "industrial": "Monthly Rental Industrial"
+        },
+        "Delivery": {
+          "commercial": "Delivery Commercial",
+          "industrial": "Delivery Industrial"
+        },
+        "Disposal": "Disposal Charge",
+        "Haul": "Empty & Return"
+      }
+    }
+  },
+  "charge_pipeline": {
+    "source_field": "_body",
+    "line_join_config": {
+      "new_line_pattern": "\\d{2}/\\d{2}/\\d{2}"
+    },
+    "body_strip": [
+      {
+        "pattern": "^\\s*Site\\s+\\d+-\\d+:.*$",
+        "replacement": "",
+        "flags": [
+          "MULTILINE"
+        ]
+      },
+      {
+        "pattern": "^\\s*Total\\s+for\\s+Site.*$",
+        "replacement": "",
+        "flags": [
+          "MULTILINE"
+        ]
+      },
+      {
+        "pattern": "^\\s*Effective\\s+.*$",
+        "replacement": "",
+        "flags": [
+          "MULTILINE"
+        ]
+      },
+      {
+        "pattern": "^\\s*holiday.*$",
+        "replacement": "",
+        "flags": [
+          "MULTILINE",
+          "IGNORECASE"
+        ]
+      },
+      {
+        "pattern": "^[\\W\\s]*$",
+        "replacement": "",
+        "flags": [
+          "MULTILINE"
+        ]
+      }
+    ],
+    "charge_detect": {
+      "date_pattern": "(\\d{2}/\\d{2}/\\d{2}(?:\\s*-\\s*\\d{2}/\\d{2}/\\d{2})?)",
+      "date_format": "{0}",
+      "require_date": true
+    },
+    "charge_extract": {
+      "amount_pattern": "\\(\\$?([\\d,]+\\.\\d{2})\\)|(-?[\\d,]+\\.\\d{2})",
+      "amount_mode": "last_is_total",
+      "desc_extract_mode": "after_date",
+      "weight_pattern": "(\\d+\\.?\\d*)\\s+Disposal"
+    },
+    "skip_patterns": [
+      "Exchange\\s+\\d+YD\\s+RO"
+    ],
+    "special_lines": [],
+    "per_charge_transforms": [
+      "equipment_detect",
+      "equipment_size_extract",
+      "equipment_size_unit_yd",
+      "equipment_size_extract_gal",
+      "equipment_size_unit_gal",
+      "equipment_size_format",
+      "material_detect",
+      "charge_type_detect",
+      "schedule_detect",
+      "charge_code_normalize"
+    ],
+    "post_processing": [
+      "parent_container_resolve",
+      "renormalize_after_parent"
+    ]
+  },
+  "output_spec": {
+    "header_fields": [
+      "invoice_number",
+      "invoice_date",
+      "account_number",
+      "bill_total",
+      "service_address"
+    ],
+    "charge_fields": [
+      "service_date",
+      "description",
+      "charge_total",
+      "equipment_type",
+      "equipment_size",
+      "material",
+      "schedule",
+      "weight",
+      "weight_unit",
+      "charge_code",
+      "charge_type"
+    ],
+    "csv_columns": [
+      "pdf_filename",
+      "pdf_link",
+      "invoice_number",
+      "invoice_date",
+      "account_number",
+      "bill_total",
+      "charge_sum",
+      "num_charges",
+      "valid",
+      "diff",
+      "service_date",
+      "description",
+      "charge_type",
+      "charge_total",
+      "equipment_type",
+      "equipment_size",
+      "material",
+      "schedule",
+      "charge_code",
+      "weight",
+      "weight_unit",
+      "flag",
+      "service_address"
+    ],
+    "required_header": [
+      "invoice_number",
+      "bill_total"
+    ],
+    "required_charge": [
+      "charge_total"
+    ],
+    "charge_sum_check": true,
+    "total_field": "bill_total"
+  },
+  "notes": "Universal Waste Systems Inc. 42 invoices. Two sub-formats: recurring (date-range, FL/Cart) and roll-off (single-date, haul/disposal). Same header structure. Descriptions encode equipment inline: 3YD FL Trash, 64G Organics, 40YD RO."
+}

@@ -1,0 +1,361 @@
+{
+  "format_label": "city_of_oxnard",
+  "vendor_name": "City of Oxnard",
+  "routing_regex": "CITY\\s+OF\\s+OXNARD|oxnard\\.org|312315-\\d+",
+  "routing_flags": [
+    "IGNORECASE",
+    "DOTALL"
+  ],
+  "extraction_stages": [
+    {
+      "name": "account_number",
+      "method": "search",
+      "pattern": "(?:Account|Acct)\\s*#?:?\\s*(?P<account_number>[\\d-]+)",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "account_number": "account_number"
+      }
+    },
+    {
+      "name": "invoice_date",
+      "method": "search",
+      "pattern": "(?:Bill\\s+Date|Date):?\\s*(?P<invoice_date>\\d{1,2}/\\d{2}/\\d{4})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "invoice_date": "invoice_date"
+      }
+    },
+    {
+      "name": "invoice_number",
+      "method": "search",
+      "pattern": "(?:Account|Acct)\\s*#?:?\\s*(?P<invoice_number>[\\d-]+)",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "invoice_number": "invoice_number"
+      }
+    },
+    {
+      "name": "bill_total",
+      "method": "search",
+      "pattern": "(?:Total\\s+Current\\s+Charges|TOTAL\\s+CURRENT):?\\s*\\$?(?P<bill_total>[\\d,]+\\.\\d{2})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "bill_total": "bill_total"
+      }
+    },
+    {
+      "name": "body",
+      "method": "body_extract",
+      "pattern": "Last\\s+payment[^\\n]*\\n(.*)Total\\s+Current\\s+Charges",
+      "flags": [
+        "IGNORECASE",
+        "DOTALL"
+      ],
+      "output_field": "body",
+      "group": 1
+    },
+    {
+      "name": "service_address",
+      "method": "search",
+      "pattern": "SERVICE\\s+ADDRESS\\s*\\n\\s*(?P<service_address>[^\\n*]+)",
+      "flags": ["IGNORECASE"],
+      "field_map": {"service_address": "service_address"}
+    },
+    {
+      "name": "service_address_account_line",
+      "method": "search",
+      "pattern": "(?P<service_address>\\d{4}\\s+CAMINO\\s+DEL\\s+SOL[^\\n*]*)",
+      "flags": ["IGNORECASE"],
+      "field_map": {"service_address": "service_address"},
+      "skip_if_set": ["service_address"]
+    }
+  ],
+  "execution_plan": [
+    "bill_total_parse",
+    "date_format"
+  ],
+  "transform_rules": {
+    "bill_total_parse": {
+      "type": "currency_parse",
+      "field": "bill_total",
+      "strip_dollar": true,
+      "strip_comma": true
+    },
+    "date_format": {
+      "type": "date_parse",
+      "field": "invoice_date",
+      "formats": [
+        "%m/%d/%Y"
+      ]
+    },
+    "date_service": {
+      "type": "date_parse",
+      "field": "service_date",
+      "formats": [
+        "%m/%d/%y",
+        "%m/%d/%Y"
+      ]
+    },
+    "equipment_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "equipment_type",
+      "rules": [
+        {
+          "keywords": "trash @",
+          "label": "ROLL_OFF"
+        },
+        {
+          "keywords": "adjustment",
+          "label": "ROLL_OFF"
+        },
+        {
+          "keywords": "compactor",
+          "label": "COMPACTOR"
+        },
+        {
+          "keywords": "rolloff",
+          "label": "ROLL_OFF"
+        },
+        {
+          "keywords": "roll off",
+          "label": "ROLL_OFF"
+        },
+        {
+          "keywords": "open top",
+          "label": "ROLL_OFF"
+        },
+        {
+          "keywords": "mo.rent",
+          "label": "ROLL_OFF"
+        },
+        {
+          "keywords": "/ton",
+          "label": "ROLL_OFF"
+        },
+        {
+          "keywords": "cr ",
+          "label": "FRONT_LOAD"
+        }
+      ],
+      "default": "FRONT_LOAD"
+    },
+    "material_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "material",
+      "rules": [
+        {
+          "keywords": " rc ",
+          "label": "RECYCLING"
+        },
+        {
+          "keywords": "recycl",
+          "label": "RECYCLING"
+        },
+        {
+          "keywords": "cardboard",
+          "label": "OCC"
+        },
+        {
+          "keywords": "organic",
+          "label": "ORGANICS"
+        },
+        {
+          "keywords": "green",
+          "label": "ORGANICS"
+        }
+      ],
+      "default": "MSW"
+    },
+    "size_extract": {
+      "type": "regex_capture",
+      "source_field": "description",
+      "output_field": "equipment_size",
+      "pattern": "(\\d+)\\s*[Yy](?:[Dd]|ARD)?\\b",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "transform": "{0} YD"
+    },
+    "charge_code_classify": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "charge_code",
+      "rules": [
+        {
+          "keywords": "rent",
+          "label": "Container Rental"
+        },
+        {
+          "keywords": "mo.rent",
+          "label": "Container Rental"
+        },
+        {
+          "keywords": "/ton",
+          "label": "Disposal"
+        },
+        {
+          "keywords": "sec prev",
+          "label": "Fuel/Environmental Recovery Fee"
+        },
+        {
+          "keywords": "/bin",
+          "label": "Fuel/Environmental Recovery Fee"
+        }
+      ],
+      "default": "Scheduled Service"
+    },
+    "charge_type_classify": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "charge_type",
+      "rules": [
+        {
+          "keywords": "rent",
+          "label": "RENTAL"
+        },
+        {
+          "keywords": "mo.rent",
+          "label": "RENTAL"
+        },
+        {
+          "keywords": "/ton",
+          "label": "ON_CALL"
+        },
+        {
+          "keywords": "sec prev",
+          "label": "SURCHARGE"
+        },
+        {
+          "keywords": "/bin",
+          "label": "SURCHARGE"
+        }
+      ],
+      "default": "RECURRING"
+    },
+    "schedule_extract": {
+      "type": "regex_parse_multi",
+      "source_field": "description",
+      "pattern": "(?<!\\d)X(?P<count>\\d+)\\b",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "group_outputs": [
+        {
+          "group": "count",
+          "output_field": "schedule",
+          "format": "Weekly x{value}"
+        }
+      ],
+      "skip_if_set": "schedule"
+    },
+    "schedule_oncall": {
+      "type": "keyword_classify",
+      "source_field": "equipment_type",
+      "output_field": "schedule",
+      "skip_if_set": true,
+      "rules": [
+        {
+          "keywords": "roll_off",
+          "label": "ON_CALL"
+        },
+        {
+          "keywords": "compactor",
+          "label": "ON_CALL"
+        }
+      ]
+    }
+  },
+  "charge_pipeline": {
+    "source_field": "body",
+    "charge_detect": {
+      "date_pattern": "(\\d{1,2}/\\d{2}/\\d{2,4})",
+      "date_format": "{0}",
+      "require_date": false
+    },
+    "charge_extract": {
+      "amount_pattern": "\\(\\$?([\\d,]+\\.\\d{2})\\)|(?!0\\.00)([\\d,]+\\.\\d{2})",
+      "amount_mode": "last_is_total"
+    },
+    "skip_patterns": [
+      "TOTAL\\s+COMMERCIAL",
+      "^\\s*$"
+    ],
+    "per_charge_transforms": [
+      "date_service",
+      "equipment_detect",
+      "schedule_extract",
+      "schedule_oncall",
+      "material_detect",
+      "size_extract",
+      "charge_code_classify",
+      "charge_type_classify"
+    ],
+    "post_processing": []
+  },
+  "output_spec": {
+    "header_fields": [
+      "invoice_number",
+      "invoice_date",
+      "account_number",
+      "bill_total",
+      "service_address"
+    ],
+    "charge_fields": [
+      "service_date",
+      "description",
+      "charge_total",
+      "equipment_type",
+      "equipment_size",
+      "material",
+      "schedule",
+      "weight",
+      "weight_unit",
+      "charge_code",
+      "charge_type"
+    ],
+    "csv_columns": [
+      "pdf_filename",
+      "pdf_link",
+      "invoice_number",
+      "invoice_date",
+      "account_number",
+      "bill_total",
+      "charge_sum",
+      "num_charges",
+      "valid",
+      "diff",
+      "service_date",
+      "description",
+      "charge_type",
+      "charge_total",
+      "equipment_type",
+      "equipment_size",
+      "material",
+      "schedule",
+      "charge_code",
+      "weight",
+      "weight_unit",
+      "flag",
+      "service_address"
+    ],
+    "required_header": [
+      "invoice_number",
+      "bill_total"
+    ],
+    "required_charge": [
+      "charge_total"
+    ],
+    "charge_sum_check": true,
+    "total_field": "bill_total"
+  }
+}

@@ -1,0 +1,343 @@
+{
+  "vendor_name": "SBC Waste Solutions",
+  "format_label": "sbc_waste",
+  "routing_regex": "SBC\\s+WASTE\\s+SOLUTIONS\\s+INVOICE",
+  "routing_flags": [
+    "IGNORECASE"
+  ],
+  "routing_priority": 50,
+  "is_active": true,
+  "sample_md5": null,
+  "extraction_stages": [
+    {
+      "name": "invoice_number",
+      "method": "search",
+      "pattern": "Invoice\\s+Number\\s+(?P<invoice_number>\\d{6})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "invoice_number": "invoice_number"
+      }
+    },
+    {
+      "name": "invoice_date",
+      "method": "search",
+      "pattern": "Invoice\\s+Date\\s+(?P<invoice_date>\\d{2}/\\d{2}/\\d{4})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "invoice_date": "invoice_date"
+      }
+    },
+    {
+      "name": "account_number",
+      "method": "search",
+      "pattern": "Account\\s+Number\\s+(?P<account_number>10-\\d{7})",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "account_number": "account_number"
+      }
+    },
+    {
+      "name": "bill_total",
+      "method": "search",
+      "pattern": "DETACH\\s+HERE.*?Invoice\\s+Total\\s+\\$?(?P<bill_total>[\\d,]+\\.\\d{2})",
+      "flags": [
+        "DOTALL",
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "bill_total": "bill_total"
+      }
+    },
+    {
+      "name": "body",
+      "method": "body_extract",
+      "pattern": "Date:\\s+Description:\\s+Units:.*?\\n(?P<body>.*)(?:-{3,}.*?DETACH\\s+HERE|PLEASE\\s+DETACH\\s+HERE)",
+      "flags": [
+        "DOTALL",
+        "IGNORECASE"
+      ],
+      "output_field": "_body",
+      "group": "body"
+    },
+    {
+      "name": "service_address",
+      "method": "search",
+      "pattern": "Service\\s+Address:[^\\n]*\\n(?P<service_address>[^\\n]+)",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "field_map": {
+        "service_address": "service_address"
+      }
+    }
+  ],
+  "execution_plan": [
+    "bill_total_parse",
+    "date_format"
+  ],
+  "transform_rules": {
+    "bill_total_parse": {
+      "type": "currency_parse",
+      "field": "bill_total",
+      "strip_dollar": true,
+      "strip_comma": true
+    },
+    "date_format": {
+      "type": "date_parse",
+      "field": "invoice_date",
+      "formats": [
+        "%m/%d/%Y"
+      ]
+    },
+    "charge_code_classify": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "charge_code",
+      "rules": [
+        {
+          "keywords": "disposal",
+          "label": "Disposal Charge"
+        },
+        {
+          "keywords": "switch",
+          "label": "Empty & Return"
+        },
+        {
+          "keywords": "dry run",
+          "label": "Empty & Return"
+        },
+        {
+          "keywords": "trash service",
+          "label": "Monthly Service Commercial"
+        },
+        {
+          "keywords": "yard waste",
+          "label": "Monthly Service Commercial"
+        },
+        {
+          "keywords": "container service",
+          "label": "Monthly Rental Commercial"
+        },
+        {
+          "keywords": "lease fee",
+          "label": "Monthly Rental Industrial"
+        },
+        {
+          "keywords": "processing fee",
+          "label": "Environmental Surcharge"
+        }
+      ],
+      "default": "Monthly Service Commercial"
+    },
+    "equipment_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "equipment_type",
+      "rules": [
+        {
+          "keywords": "comp",
+          "label": "COMPACTOR"
+        },
+        {
+          "keywords": "open top",
+          "label": "ROLL_OFF"
+        },
+        {
+          "keywords": "switch",
+          "label": "ROLL_OFF"
+        },
+        {
+          "keywords": "disposal",
+          "label": "ROLL_OFF"
+        }
+      ],
+      "default": "FRONT_LOAD"
+    },
+    "material_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "material",
+      "rules": [
+        {
+          "keywords": "yard waste",
+          "label": "YARD_WASTE"
+        },
+        {
+          "keywords": "recycl",
+          "label": "RECYCLING"
+        }
+      ],
+      "default": "MSW"
+    },
+    "schedule_detect": {
+      "type": "keyword_classify",
+      "source_field": "description",
+      "output_field": "schedule",
+      "rules": [
+        {
+          "keywords": "switch",
+          "label": "ON_CALL"
+        },
+        {
+          "keywords": "disposal",
+          "label": "ON_CALL"
+        },
+        {
+          "keywords": "dry run",
+          "label": "ON_CALL"
+        }
+      ],
+      "default": null
+    },
+    "equipment_size_extract": {
+      "type": "regex_parse_multi",
+      "source_field": "description",
+      "pattern": "(?P<size_num>\\d+)\\s*(?P<size_unit>YD|YARD)",
+      "flags": [
+        "IGNORECASE"
+      ],
+      "group_outputs": [
+        {
+          "group": "size_num",
+          "output_field": "_size_num"
+        },
+        {
+          "group": "size_unit",
+          "output_field": "_size_unit",
+          "map": {
+            "YD": "YD",
+            "yd": "YD",
+            "YARD": "YD",
+            "Yard": "YD"
+          }
+        }
+      ]
+    },
+    "equipment_size_format": {
+      "type": "concat_fields",
+      "fields": [
+        "_size_num",
+        "_size_unit"
+      ],
+      "separator": " ",
+      "output_field": "equipment_size"
+    },
+    "surcharge_inherit": {
+      "type": "parent_container",
+      "charges_field": "_charges",
+      "inherit_fields": [
+        "equipment_type",
+        "equipment_size",
+        "material",
+        "schedule"
+      ],
+      "direction": "both",
+      "skip_zero": false
+    }
+  },
+  "charge_pipeline": {
+    "mode": "flat",
+    "source_field": "_body",
+    "skip_patterns": [
+      "^\\s*$",
+      "PMT:",
+      "WORK\\s+ORDER",
+      "PO#:",
+      "Thank\\s+You",
+      "Save\\s+time",
+      "Sign\\s+up",
+      "AutoPay",
+      "PAYMENTS\\s+RECEIVED",
+      "Subtotal:",
+      "Balance\\s+Due",
+      "DETACH\\s+HERE",
+      "SBC\\s+WASTE",
+      "Invoice\\s+(Date|Number|Total)",
+      "Account\\s+Number",
+      "Date:\\s+Description"
+    ],
+    "charge_detect": {
+      "date_pattern": "(\\d{2}/\\d{2}/\\d{2})",
+      "date_format": "{0}"
+    },
+    "charge_extract": {
+      "amount_pattern": "\\(\\$?([\\d,]+\\.\\d{2})\\)|\\$?(-?[\\d,]+\\.\\d{2})",
+      "amount_mode": "last_is_total",
+      "min_amounts": 2,
+      "weight_pattern": "disposal\\s+(\\d+\\.\\d+)"
+    },
+    "per_charge_transforms": [
+      "charge_code_classify",
+      "equipment_detect",
+      "material_detect",
+      "schedule_detect",
+      "equipment_size_extract",
+      "equipment_size_format"
+    ],
+    "post_processing": [
+      "surcharge_inherit"
+    ]
+  },
+  "output_spec": {
+    "header_fields": [
+      "invoice_number",
+      "invoice_date",
+      "account_number",
+      "bill_total",
+      "service_address"
+    ],
+    "charge_fields": [
+      "service_date",
+      "description",
+      "charge_total",
+      "equipment_type",
+      "equipment_size",
+      "material",
+      "schedule",
+      "weight",
+      "weight_unit",
+      "charge_code",
+      "charge_type"
+    ],
+    "csv_columns": [
+      "pdf_filename",
+      "pdf_link",
+      "invoice_number",
+      "invoice_date",
+      "account_number",
+      "bill_total",
+      "charge_sum",
+      "num_charges",
+      "valid",
+      "diff",
+      "service_date",
+      "description",
+      "charge_type",
+      "charge_total",
+      "equipment_type",
+      "equipment_size",
+      "material",
+      "schedule",
+      "charge_code",
+      "weight",
+      "weight_unit",
+      "flag",
+      "service_address"
+    ],
+    "required_header": [
+      "invoice_number",
+      "bill_total"
+    ],
+    "required_charge": [
+      "charge_total"
+    ],
+    "charge_sum_check": true,
+    "total_field": "bill_total"
+  }
+}
