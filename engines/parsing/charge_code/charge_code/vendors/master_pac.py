@@ -2,7 +2,7 @@
 
 Format (repair narrative):
     Services  Quantity  Parts & Labor  Total
-    e.g. "Northrop Grumman ... 1 $810.00 $810.00"
+    e.g. "Customer Name ... 1 $810.00 $810.00"
     Parts listed in narrative: "Hinges= $60.00"
     Travel and labor: "Travel: $225.00", "Labor: 2 Techs x 3hrs= $450.00"
     Additional trips: "1st Trip 1 $300.00 $300.00"
@@ -18,9 +18,9 @@ def extract_master_pac(text: str) -> List[ChargeItem]:
     items = []
 
     # Main service line: "DESCRIPTION QTY $TOTAL $TOTAL"
-    # e.g. "Northrop Grumman ... 1 $810.00 $810.00"
+    # e.g. "Customer Name ... 1 $810.00 $810.00"
     service_pattern = re.compile(
-        r'((?:Northrop|Service|Repair|Maintenance|Inspection|'
+        r'((?:Service|Repair|Maintenance|Inspection|'
         r'Trip|Travel|Labor|Parts|Install)[\w\s\-/&,.]*?)\s+'
         r'(\d+)\s+'
         r'\$?([\d,]+\.?\d*)\s+'

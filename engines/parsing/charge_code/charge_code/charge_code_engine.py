@@ -1612,7 +1612,7 @@ def _extract_vanderlind(text: str) -> List[ChargeItem]:
     # Also: "5/18 Daily Rental SC-0095 since Apr 18, 1 65.00 65.00"
     # Format: "5/9 Compactor Pull In: Apr 23 1 300.00 300.00" (qty rate amount)
     # Also: "3/27. Daily Rental SC-0019 since Feb 25, 2025 1 65.00" (qty amount only)
-    # Also: "2/6 40ydCanPull In: Jan 22 - SWAP - Northrop Grumman 200.00 200.00" (no qty)
+    # Also: "2/6 40ydCanPull In: Jan 22 - SWAP - Customer Name 200.00 200.00" (no qty)
     svc_pat = re.compile(
         r'(?P<date>\d{1,2}/\d{1,2})\.?\s+'
         r'(?P<desc>(?:Compactor\s*Pull|CompDlyRental|TippingFee|FS|EPA|DEQ|'
@@ -1811,7 +1811,7 @@ def _extract_the_arc(text: str) -> List[ChargeItem]:
     items = []
 
     svc_pat = re.compile(
-        r'(?P<qty>\d+)\s+(?P<desc>GRUMMAN[\w\s]+|Administrative[\w\s]+|Waste[\w\s]+|Recycling[\w\s]+)\s+'
+        r'(?P<qty>\d+)\s+(?P<desc>Administrative[\w\s]+|Waste[\w\s]+|Recycling[\w\s]+)\s+'
         r'\$(?P<rate>[\d,]+\.?\d*)\s+\$(?P<amount>[\d,]+\.?\d*)', re.IGNORECASE)
     for m in svc_pat.finditer(text):
         items.append(ChargeItem(charge_description=m.group('desc').strip(), qty=_clean_qty(m.group('qty')),
@@ -1820,7 +1820,7 @@ def _extract_the_arc(text: str) -> List[ChargeItem]:
     # Stacked column format - description on one line, amounts on another
     # "Administrative Services (March)\n...\nAmount\n\n$999.00"
     if not items:
-        desc_match = re.search(r'(?P<desc>Administrative\s+Services[\w\s()]*|GRUMMAN\s+[\w\s]+|Waste\s+[\w\s]+|Recycling\s+[\w\s]+)', text, re.IGNORECASE)
+        desc_match = re.search(r'(?P<desc>Administrative\s+Services[\w\s()]*|Waste\s+[\w\s]+|Recycling\s+[\w\s]+)', text, re.IGNORECASE)
         amt_match = re.search(r'(?:TOTAL|Amount)\s*\n+\s*\$(?P<amt>[\d,]+\.?\d*)', text, re.IGNORECASE)
         if desc_match and amt_match:
             items.append(ChargeItem(

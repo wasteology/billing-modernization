@@ -16,7 +16,7 @@ The invoice processing pipeline has two independent charge code vocabularies tha
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                              │
 │  EXTRACTION SIDE                    ERP SIDE                                │
-│  (ng-report / executor.py)          (ops_database / catalog_seeder.py)      │
+│  (extraction / executor.py)          (pipeline / catalog_seeder.py)          │
 │                                                                              │
 │  ┌──────────────────────┐           ┌──────────────────────┐                │
 │  │ normalize_charges.py │           │ ip_service_catalog   │                │

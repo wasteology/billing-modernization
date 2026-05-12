@@ -5,7 +5,7 @@ from ..models import ChargeItem
 
 def extract_easco_brokerage(text: str) -> List[ChargeItem]:
     items = []
-    detail = re.search(r'(?:Northrop\s+Grumman|Memo\s+Item)\s*\n(.*?)(?:TOTAL|Page)', text, re.DOTALL | re.IGNORECASE)
+    detail = re.search(r'(?:Customer\s+Name|Memo\s+Item)\s*\n(.*?)(?:TOTAL|Page)', text, re.DOTALL | re.IGNORECASE)
     search_text = detail.group(1) if detail else text
     charge_pattern = re.compile(r'([\w\s.]+?)\s+([\d,]+)\s+([\d.]+)\s+([\d,]+\.\d{2})', re.IGNORECASE)
     for m in charge_pattern.finditer(search_text):

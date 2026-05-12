@@ -1,6 +1,6 @@
 """
-app.py — 6-gate HITL invoice review (ng-report/invoices)
-Uses same wasteology_ops PostgreSQL schema as invoice-poc.
+app.py — 6-gate HITL invoice review
+Uses wasteology_ops PostgreSQL schema.
 Port: 5051
 """
 import csv, io, os
@@ -11,7 +11,7 @@ import db
 app = Flask(__name__, static_folder="static", static_url_path="")
 CORS(app)
 
-PDF_BASE = "/home/scstclair/projects/ng-report"
+PDF_BASE = os.environ.get("PDF_BASE", ".")
 
 
 # ── Static ────────────────────────────────────────────────────────────────

@@ -659,8 +659,8 @@ Based on NG Report data (410 on-call services), prioritize vendors by volume:
 |--------|------------|
 | `01_vendor_detection` | Provides vendor name for routing |
 | `03_line_item_equipment_material` | Identifies equipment type to determine if weight extraction needed |
-| `ocr_pipeline.py` (ng-report) | Provides raw OCR text for extraction |
-| `weight_calculator.py` (ng-report) | Integrates extracted weights |
+| `ocr_pipeline.py` | Provides raw OCR text for extraction |
+| `weight_calculator.py` | Integrates extracted weights |
 
 ---
 

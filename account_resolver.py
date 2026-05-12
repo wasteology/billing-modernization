@@ -25,7 +25,7 @@ DEFAULT_SOURCE = Path(
 )
 
 CONFIDENCE_MAP = {
-    'VOUCHER_VALIDATED':        'high',
+    'AP_VALIDATED':             'high',
     'DIRECT_SINGLE_VENDOR':     'medium',
     'SUBSTRING_SINGLE_VENDOR':  'low',
     'DIRECT_MULTI_VENDOR':      'low',

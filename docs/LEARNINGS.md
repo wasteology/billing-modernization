@@ -278,7 +278,7 @@ Final corpus coverage: **98.3%** across 1,385 invoices (37 patterns).
 {
   "name": "service_address_fallback",
   "method": "search",
-  "pattern": "(?P<fallback_addr>NORTHROP\\s+GRUMMAN\\s+C/O\\s+WASTE\\s+HARMONICS)",
+  "pattern": "(?P<fallback_addr>CUSTOMER_NAME\\s+C/O\\s+BILLING_COMPANY)",
   "flags": ["IGNORECASE"],
   "field_map": {"fallback_addr": "_fallback_addr"},
   "skip_if_set": ["service_street"]
@@ -337,14 +337,14 @@ When a vendor has multiple address formats, chain stages with `skip_if_set`:
 | Pattern | Primary anchor | Notes |
 |---------|---------------|-------|
 | WM Invoice Detail | `block_context` per location block | Multi-site: address extracted per block. Use `(?!\d)[^\n]*\n` (not `[^\d\n]`) — blank lines between `/` anchor and street number must be traversable |
-| WM Customer ID | `Northrop Grumman[^,\n]*(?:,[^\d,\n][^,\n]*)?,\s*(?P<service_address>\d+[^,\n]+)` | Allows 1–2 company suffix segments before street number |
-| Republic Services | `Northrop\s+Grumman[^\d\n]*(?P<service_address>\d+[^\n]+?)` + ATK fallback | `[^\d\n]*` skips company suffix words |
-| Cockey's (ck_format_b) | `Site\s+\d+\s*-\s*NORTHROP\s+GRUMMAN\s*-\s*(?:[^-\n]+-\s*){0,5}(?P<service_address>\d+...)` | 0–5 dash-segments between client name and street number (0 handles direct address format) |
+| WM Customer ID | `Customer Name[^,\n]*(?:,[^\d,\n][^,\n]*)?,\s*(?P<service_address>\d+[^,\n]+)` | Allows 1–2 company suffix segments before street number |
+| Republic Services | `Customer\s+Name[^\d\n]*(?P<service_address>\d+[^\n]+?)` + fallback | `[^\d\n]*` skips company suffix words |
+| Cockey's (ck_format_b) | `Site\s+\d+\s*-\s*CUSTOMER\s+NAME\s*-\s*(?:[^-\n]+-\s*){0,5}(?P<service_address>\d+...)` | 0–5 dash-segments between customer name and street number (0 handles direct address format) |
 | Robinson Waste | `site_line` service pattern with inherited address per block | Per-service address from line header |
-| Athens, UWS, Meridian | `Northrop Grumman[^\n]*\n(?P<service_address>\d+[^\n]+)` | Address on next line after client name |
-| LePage & Sons | `HARMONICS\s+(?P<service_address>\d+[^\n]+)` + interleaved fallback | OCR column interleaving can merge Waste Harmonics PO address with service address on same line |
-| EDCO Disposal | Anchored to `BALANCE FORWARD`/`MO DAY` section, skipping payment lines | Vendor's own address (6670 Federal Blvd) appears in header — must anchor to body section |
-| Waste Disposal AZ | `addr_concat` (street + city) + `copy_if_null` fallback from `NORTHROP GRUMMAN C/O WASTE HARMONICS` | AZSV11 invoices have no printed address — use company name as fallback |
+| Athens, UWS, Meridian | `Customer Name[^\n]*\n(?P<service_address>\d+[^\n]+)` | Address on next line after customer name |
+| LePage & Sons | `COMPANY\s+(?P<service_address>\d+[^\n]+)` + interleaved fallback | OCR column interleaving can merge billing company PO address with service address on same line |
+| EDCO Disposal | Anchored to `BALANCE FORWARD`/`MO DAY` section, skipping payment lines | Vendor's own address appears in header — must anchor to body section |
+| Waste Disposal AZ | `addr_concat` (street + city) + `copy_if_null` fallback from customer name | Some invoices have no printed address — use customer name as fallback |
 
 ### Known Structural Gaps (not fixable by pattern)
 

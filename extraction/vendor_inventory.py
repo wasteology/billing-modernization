@@ -3,10 +3,11 @@ Step 2 — Vendor inventory from OCR text.
 Identifies unique vendors and counts invoices per vendor.
 """
 
+import os
 import pandas as pd
 import re
 
-df = pd.read_csv('/home/scstclair/projects/ng-report/Invoices/output/ocr_results.csv')
+df = pd.read_csv(os.environ.get("OCR_RESULTS_CSV", "output/ocr_results.csv"))
 
 # Ordered by specificity — first match wins on multi-match
 patterns = [
@@ -110,7 +111,7 @@ for _, row in unmatched.iterrows():
     print(f'  {row["pdf_filename"]}  (file says: {row["vendor_file"]})')
 
 # Save inventory
-rdf.to_csv('/home/scstclair/projects/ng-report/Invoices/output/vendor_inventory.csv', index=False)
+rdf.to_csv('output/vendor_inventory.csv', index=False)
 print(f'\nSaved to output/vendor_inventory.csv')
 
 # Also show doc_type breakdown per vendor

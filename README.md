@@ -61,7 +61,7 @@ billing-modernization/
 ├── SCHEMA.md                          # Full database schema (33 tables + 2 views)
 ├── CHARGE_CATALOG_RECONCILIATION.md   # The integration gap — start here
 │
-├── extraction/                        # ACTIVE extraction engine (from ng-report)
+├── extraction/                        # ACTIVE extraction engine
 │   ├── executor.py                    # Universal JSON pattern executor (26+ handlers)
 │   ├── app.py                         # Flask HITL review UI (port 5051)
 │   ├── db.py                          # PostgreSQL data access layer
@@ -73,8 +73,6 @@ billing-modernization/
 │   ├── validate_output.py             # Cross-invoice semantic validation
 │   ├── diff_tool.py                   # Regression testing (baseline vs current)
 │   ├── reocr_failures.py              # Re-OCR failed invoices
-│   ├── patterns/
-│   │   └── json/                      # 43 vendor extraction patterns (JSON configs)
 │   └── output/
 │       ├── charge_code_ref.csv        # 171 canonical charge codes
 │       └── charge_code_aliases.json   # Non-canonical → canonical mapping
@@ -99,7 +97,7 @@ billing-modernization/
 │   └── reprocess.py                   # Reprocess subset of documents
 │
 ├── linkage/                           # Invoice → service matching
-│   ├── linkage.py                     # 4-phase linkage (voucher-first pipeline)
+│   ├── linkage.py                     # Invoice-to-service linkage
 │   ├── enricher.py                    # Enrich invoice_registry with parsing_engines
 │   ├── matcher.py                     # Fuzzy match (vendor + amount + date + address)
 │   ├── resolver.py                    # Aggregate → account_location_map
@@ -125,7 +123,7 @@ billing-modernization/
 │   │   └── service_address/           # Service location extraction
 │   └── normalization/                 # Name resolution
 │       ├── vendor_normalization_engine.py  # 892 vendor name mappings
-│       └── account_linkage/           # v4 voucher-first pipeline (23,267 mappings)
+
 │
 ├── docs/                              # Reference documentation
 │   ├── ARCHITECTURE.md                # Design principles (infra-as-code, determinism)
@@ -153,7 +151,7 @@ billing-modernization/
 
 4. **OCR-Only Extraction** — The executor only sees OCR text. It never sees PDFs. Patterns must work on Tesseract output.
 
-5. **Voucher-First Linkage** — Never match OCR invoice_number directly to billing_reference (truncated on grouped billing). Always: OCR → fuzzy match → Voucher Inquiry → billing_reference → service_id.
+5. **Account-First Linkage** — Never match OCR invoice_number directly to billing_reference (truncated on grouped billing). Account number extraction is the deterministic path to service_id.
 
 6. **Account Number Priority** — If an account number exists on an invoice, extract it. Account → service_id is deterministic. Address matching is a last resort.
 
