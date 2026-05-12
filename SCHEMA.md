@@ -361,7 +361,7 @@ LEFT JOIN ip_extraction_result e_vendor/e_account/e_invoice/e_date/e_amount ...
 
 ## B. HITL App Tables
 
-Source: `/ng-report/invoices/db.py` (queries), `/invoice-poc/` (app layer)
+Source: `extraction/db.py` (queries), `pipeline/app.py` (app layer)
 
 These tables support the 6-gate review UI (Flask app on port 5051). They are consumed by `db.py` but defined at the database level.
 
@@ -800,7 +800,7 @@ How Wasteology billed customers. Primary transactional table.
 
 > [!NOTE]
 > `billing_reference` is TRUNCATED on grouped billing. Never match directly
-> against OCR invoice numbers. Use voucher-first linkage flow.
+> against OCR invoice numbers. Use account-first linkage flow.
 
 **Referenced by:** invoice_service_match
 
@@ -910,7 +910,7 @@ Maps raw vendor name variants to canonical vendor_id.
 
 ### E12. ap_report
 
-Accounts payable payment records. Used for voucher-first linkage.
+Accounts payable payment records. Used for invoice-to-service linkage.
 
 | Column | Type | Constraints | Description |
 |--------|------|-------------|-------------|
