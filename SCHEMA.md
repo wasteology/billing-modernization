@@ -52,15 +52,15 @@ The invoice processing pipeline spans three subsystems that share a single Postg
 │  ┌──────────────────────────────────────────────────────────────────────────┐   │
 │  │  E. OPS_DATABASE TABLES (referenced by pipeline)                         │   │
 │  │     vendor, customer, location, services_current, billing_charges,       │   │
-│  │     charge_code_ref, account_number_resolution, vendor_name_mapping,     │   │
-│  │     ap_report                                                            │   │
-│  │  9 tables (subset relevant to invoice pipeline)                          │   │
+│  │     charge_code_ref, waste_stream_ref, service_chain, ...                │   │
+│  │                                                                          │   │
+│  │  12 tables (subset relevant to invoice pipeline)                         │   │
 │  └──────────────────────────────────────────────────────────────────────────┘   │
 │                                                                                 │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-**Table Count:** 33 tables + 2 views
+**Table Count:** 36 tables + 2 views
 
 ---
 
@@ -361,7 +361,7 @@ LEFT JOIN ip_extraction_result e_vendor/e_account/e_invoice/e_date/e_amount ...
 
 ## B. HITL App Tables
 
-Source: `extraction/db.py` (queries), `pipeline/app.py` (app layer)
+Source: `/ng-report/invoices/db.py` (queries), `/invoice-poc/` (app layer)
 
 These tables support the 6-gate review UI (Flask app on port 5051). They are consumed by `db.py` but defined at the database level.
 
@@ -800,13 +800,32 @@ How Wasteology billed customers. Primary transactional table.
 
 > [!NOTE]
 > `billing_reference` is TRUNCATED on grouped billing. Never match directly
-> against OCR invoice numbers. Use account-first linkage flow.
+> against OCR invoice numbers. Use voucher-first linkage flow.
 
 **Referenced by:** invoice_service_match
 
 ---
 
-### E6. charge_code_ref
+### E6. service_chain
+
+Linked container services tracked over time.
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| `chain_id` | SERIAL | **PK** | |
+| `location_id` | INTEGER | FK → location | |
+| `customer_id` | INTEGER | NOT NULL, FK → customer | |
+| `waste_stream_id` | INTEGER | FK → waste_stream_ref | |
+| `chain_start_date` | DATE | | |
+| `chain_end_date` | DATE | | |
+| `is_active` | BOOLEAN | | |
+| `current_service_id` | TEXT | | |
+| `vendor_contract_id` | INTEGER | | |
+| `created_date` | DATE | | |
+
+---
+
+### E7. charge_code_ref
 
 171 canonical charge codes (18 tier-1, 153 tier-2).
 
@@ -821,7 +840,37 @@ How Wasteology billed customers. Primary transactional table.
 
 ---
 
-### E7. account_number_resolution
+### E8. waste_stream_ref
+
+Waste material types.
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| `waste_stream_id` | SERIAL | **PK** | |
+| `waste_stream_code` | TEXT | NOT NULL, UNIQUE | |
+| `waste_stream_name` | TEXT | | |
+| `waste_stream_category` | TEXT | | |
+| `is_active` | BOOLEAN | DEFAULT TRUE | |
+
+---
+
+### E9. container
+
+Physical containers at locations.
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| `container_id` | SERIAL | **PK** | |
+| `location_id` | INTEGER | NOT NULL, FK → location | |
+| `waste_stream_id` | INTEGER | FK → waste_stream_ref | |
+| `equipment_type` | TEXT | | |
+| `container_size_yards` | DOUBLE PRECISION | | |
+| `is_active` | BOOLEAN | | |
+| `created_date` | DATE | | |
+
+---
+
+### E10. account_number_resolution
 
 Maps hauler account numbers to services/locations. Multiple confidence levels.
 
@@ -845,7 +894,7 @@ Maps hauler account numbers to services/locations. Multiple confidence levels.
 
 ---
 
-### E8. vendor_name_mapping
+### E11. vendor_name_mapping
 
 Maps raw vendor name variants to canonical vendor_id.
 
@@ -859,9 +908,9 @@ Maps raw vendor name variants to canonical vendor_id.
 
 ---
 
-### E9. ap_report
+### E12. ap_report
 
-Accounts payable payment records. Used for invoice-to-service linkage.
+Accounts payable payment records. Used for voucher-first linkage.
 
 | Column | Type | Constraints | Description |
 |--------|------|-------------|-------------|
@@ -1056,7 +1105,10 @@ Accounts payable payment records. Used for invoice-to-service linkage.
 | 28 | location | E | location_id | — | Service locations |
 | 29 | services_current | E | service_id | — | Active service contracts |
 | 30 | billing_charges | E | billing_charge_id | — | CIE billing transactions |
-| 31 | charge_code_ref | E | charge_code_id | 171 | Canonical charge codes |
-| 32 | account_number_resolution | E | resolution_id | — | Account → service mapping |
-| 33 | vendor_name_mapping | E | mapping_id | — | Vendor name aliases |
-| 34 | ap_report | E | ap_record_id | — | AP payment records |
+| 31 | service_chain | E | chain_id | 107 | Linked service history |
+| 32 | charge_code_ref | E | charge_code_id | 171 | Canonical charge codes |
+| 33 | waste_stream_ref | E | waste_stream_id | ~50 | Waste materials |
+| 34 | container | E | container_id | — | Physical containers |
+| 35 | account_number_resolution | E | resolution_id | — | Account → service mapping |
+| 36 | vendor_name_mapping | E | mapping_id | — | Vendor name aliases |
+| 37 | ap_report | E | ap_record_id | — | AP payment records |

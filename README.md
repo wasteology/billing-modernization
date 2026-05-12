@@ -58,10 +58,10 @@
 billing-modernization/
 │
 ├── README.md                          # This file
-├── SCHEMA.md                          # Full database schema (33 tables + 2 views)
+├── SCHEMA.md                          # Full database schema (36 tables + 2 views)
 ├── CHARGE_CATALOG_RECONCILIATION.md   # The integration gap — start here
 │
-├── extraction/                        # ACTIVE extraction engine
+├── extraction/                        # Active extraction engine
 │   ├── executor.py                    # Universal JSON pattern executor (26+ handlers)
 │   ├── app.py                         # Flask HITL review UI (port 5051)
 │   ├── db.py                          # PostgreSQL data access layer
@@ -98,7 +98,7 @@ billing-modernization/
 │
 ├── linkage/                           # Invoice → service matching
 │   ├── linkage.py                     # Invoice-to-service linkage
-│   ├── enricher.py                    # Enrich invoice_registry with parsing_engines
+│   ├── enricher.py                    # Enrich invoice_registry with extracted fields
 │   ├── matcher.py                     # Fuzzy match (vendor + amount + date + address)
 │   ├── resolver.py                    # Aggregate → account_location_map
 │   ├── address.py                     # Fuzzy address scoring
@@ -109,21 +109,6 @@ billing-modernization/
 │   ├── layer1_raw.py                  # invoice_raw, line_item_raw
 │   ├── layer2_operational.py          # vendor, customer, services_current, billing_charges, etc.
 │   └── reference_tables.py            # charge_code_ref, waste_stream_ref, container refs
-│
-├── engines/                           # Deterministic extraction + normalization engines
-│   ├── parsing/                       # Regex-based field extraction
-│   │   ├── vendor_detection/          # 1,177 vendor patterns (98.9% coverage)
-│   │   ├── account_number/            # Account extraction (97.8% coverage)
-│   │   ├── invoice_number/            # Invoice # extraction
-│   │   ├── dates/                     # Date extraction (16+ formats)
-│   │   ├── amount_due/                # Bill total extraction (40+ patterns)
-│   │   ├── charge_code/               # 3-tier charge extraction (45 vendor extractors)
-│   │   ├── charge_code_normalization/ # 155 canonical codes, 12 vendor normalizers
-│   │   ├── line_items/                # Equipment, material, size, schedule
-│   │   └── service_address/           # Service location extraction
-│   └── normalization/                 # Name resolution
-│       ├── vendor_normalization_engine.py  # 892 vendor name mappings
-
 │
 ├── docs/                              # Reference documentation
 │   ├── ARCHITECTURE.md                # Design principles (infra-as-code, determinism)
@@ -136,7 +121,7 @@ billing-modernization/
 ├── azure_helpers.py                   # Azure SQL connection helpers
 ├── account_resolver.py                # Account resolution from extracted data
 ├── charge_code_mapper.py              # Charge code → canonical SKU mapping
-└── load_vendor_patterns.py            # Load JSON patterns → database
+└── load_vendor_patterns.py            # Load patterns → database
 ```
 
 ---
@@ -169,7 +154,7 @@ billing-modernization/
 
 ## Database Schema
 
-See `SCHEMA.md` for full column-level definitions of all 33 tables + 2 views:
+See `SCHEMA.md` for full column-level definitions of all 36 tables + 2 views:
 
 | Section | Tables | Purpose |
 |---------|--------|---------|
@@ -177,7 +162,7 @@ See `SCHEMA.md` for full column-level definitions of all 33 tables + 2 views:
 | B. HITL App | 7 | Run lifecycle, 6-gate review UI, pattern configs |
 | C. Raw Inbound | 3 | Conformed invoice/line item data for downstream |
 | D. Invoice Linkage | 3 | Match invoices → billing → services → locations |
-| E. Operational Reference | 9 | vendor, customer, services, billing, charge codes, account resolution |
+| E. Operational Reference | 12 | vendor, customer, location, services, billing, charge codes, waste streams, containers, account resolution |
 
 ---
 
@@ -199,7 +184,7 @@ See `SCHEMA.md` for full column-level definitions of all 33 tables + 2 views:
 
 | Document | Purpose | Read When |
 |----------|---------|-----------|
-| `SCHEMA.md` | Full database schema (33 tables) | Understanding data model |
+| `SCHEMA.md` | Full database schema (36 tables) | Understanding data model |
 | `CHARGE_CATALOG_RECONCILIATION.md` | The integration gap — what needs to be built | Scoping the deliverable |
 | `docs/ARCHITECTURE.md` | Design principles, handler registry | Modifying or extending the executor |
 | `docs/OUTPUT_SPEC.md` | 23 canonical columns + vendor-specific | Building new patterns or validating output |
