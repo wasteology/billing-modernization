@@ -1,0 +1,30 @@
+# This file tells gcloud to ignore these files and directories when uploading
+# the build context. This is crucial for avoiding "Argument list too long"
+# errors and for speeding up the build process.
+
+# Python virtual environment
+.venv/
+
+# Node.js dependencies
+frontend/node_modules/
+node_modules/
+
+# Python cache files
+.pytest_cache/
+__pycache__/
+*.pyc
+
+# Git directory
+.git/
+
+# IDE and editor directories
+.vscode/
+.idea/
+
+# Temporary deployment files
+gcp_deployment/cloudbuild.tmp.yaml
+gcp_deployment/env.tmp.yaml
+gcp_deployment/deploy.conf
+
+# Local development database
+test.db

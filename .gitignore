@@ -1,0 +1,84 @@
+# Terraform working directory
+.terraform/
+**/.terraform/*
+
+*.tfstate
+*.tfstate.*
+local_test/
+*.tfplan
+*.plan
+
+.terraform.lock.hcl
+
+# Crash logs
+crash.log
+*.tfvars
+*.tfvars.json
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+.terraformrc
+terraform.rc
+
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+*.env
+test.db
+.venv
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+.DS_Store
+
+# Claude Code
+.claude/
+.gemini/
+.conductor
+conductor/
+docs/superpowers
+# IDEs
+.vscode/
+.idea/
+academic-torch-405913-73135895ad19.json
+backend/uvicorn.log
+deploy.conf
+generate_medical_data.py
+liver_disease_data.json
+patient_records_specific_conditions.csv
+.gemini/settings.json
+backend/api_calls.log
+*.log
+
+# Databases
+*.db
+
+# Temporary Scripts
+local_fix_*.py
+check_*.py
+deploy_manual.py
+manage_deployments.py
+restore_ghosts*.py
+repair_ghosts*.py
+apply_migration_cloud.py
+error_check.txt
+cleanup_empty_invoices.py
+test_db_connect.py
+# Logs
+logs/
+gcp_deployment/deploy.conf
+terraform/environments/prod/cloud_run.tf
+scratch/
